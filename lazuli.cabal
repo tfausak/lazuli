@@ -49,6 +49,8 @@ library
     Lazuli.Exception.InvalidOption
     Lazuli.Exception.UnexpectedArgument
     Lazuli.Exception.UnknownOption
+    Lazuli.Main.Executable
+    Lazuli.Main.TestSuite
     Lazuli.Type.Config
     Lazuli.Type.Flag
 
