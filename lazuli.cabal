@@ -45,10 +45,16 @@ library
     , hspec ^>=2.10.8
     , http-types ^>=0.12.3
     , lucid2 ^>=0.0.20221012
+    , random ^>=1.2.1
+    , text ^>=2.0.1
+    , vault ^>=0.3.1
     , wai ^>=3.2.3
     , warp ^>=3.3.23
 
-  default-extensions: OverloadedStrings
+  default-extensions:
+    DerivingVia
+    OverloadedStrings
+
   exposed-modules:
     Lazuli
     Lazuli.Constant.Header
@@ -60,6 +66,7 @@ library
     Lazuli.Main.TestSuite
     Lazuli.Type.Config
     Lazuli.Type.Flag
+    Lazuli.Type.RequestId
 
   hs-source-dirs:     source/library
   other-modules:

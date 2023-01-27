@@ -4,11 +4,15 @@ import qualified Control.Monad as Monad
 import qualified Control.Monad.Catch as Catch
 import qualified Data.ByteString as ByteString
 import Data.Function ((&))
+import qualified Data.Text as Text
+import qualified Data.Text.Encoding as Text
+import qualified Data.Vault.Lazy as Vault
 import qualified GHC.Conc as Conc
 import qualified Lazuli.Constant.Header as Header
 import qualified Lazuli.Constant.Version as Version
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Flag as Flag
+import qualified Lazuli.Type.RequestId as RequestId
 import qualified Lucid
 import qualified Network.HTTP.Types as Http
 import qualified Network.Wai as Wai
@@ -17,6 +21,8 @@ import qualified System.Console.GetOpt as GetOpt
 import qualified System.Environment as Environment
 import qualified System.Exit as Exit
 import qualified System.IO as IO
+import qualified System.Random as Random
+import qualified Text.Printf as Printf
 
 executable :: IO ()
 executable = do
@@ -35,7 +41,8 @@ executable = do
     putStrLn Version.string
     Exit.exitSuccess
 
-  Warp.runSettings settings application
+  requestIdKey <- Vault.newKey
+  Warp.runSettings settings $ middleware requestIdKey application
 
 uncaughtExceptionHandler :: Catch.SomeException -> IO ()
 uncaughtExceptionHandler (Catch.SomeException e) =
@@ -69,3 +76,10 @@ application _request respond = respond
         Lucid.title_ "Lazuli"
       Lucid.body_ $ do
         Lucid.h1_ "Lazuli"
+
+middleware :: Vault.Key RequestId.RequestId -> Wai.Middleware
+middleware requestIdKey handle request respond = do
+  requestId <- Random.randomIO
+  let vault = Vault.insert requestIdKey requestId $ Wai.vault request
+  handle request {Wai.vault = vault} $ \response -> do
+    respond $ Wai.mapResponseHeaders ((Header.lazuliRequestId, Text.encodeUtf8 . Text.pack . Printf.printf "%016x" $ RequestId.intoWord64 requestId) :) response

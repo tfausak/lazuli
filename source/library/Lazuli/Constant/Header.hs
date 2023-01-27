@@ -11,6 +11,9 @@ contentTypeOptions = "X-Content-Type-Options"
 frameOptions :: Http.HeaderName
 frameOptions = "X-Frame-Options"
 
+lazuliRequestId :: Http.HeaderName
+lazuliRequestId = "Lazuli-Request-Id"
+
 referrerPolicy :: Http.HeaderName
 referrerPolicy = "Referrer-Policy"
 
