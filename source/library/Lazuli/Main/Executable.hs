@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Lazuli.Main.Executable where
 
 import qualified Control.Monad as Monad
@@ -6,6 +8,10 @@ import qualified GHC.Conc as Conc
 import qualified Lazuli.Constant.Version as Version
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Flag as Flag
+import qualified Lucid
+import qualified Network.HTTP.Types as Http
+import qualified Network.Wai as Wai
+import qualified Network.Wai.Handler.Warp as Warp
 import qualified System.Console.GetOpt as GetOpt
 import qualified System.Environment as Environment
 import qualified System.Exit as Exit
@@ -27,6 +33,21 @@ executable = do
   Monad.when (Config.version config) $ do
     putStrLn Version.string
     Exit.exitSuccess
+
+  Warp.runSettings Warp.defaultSettings $ \_request respond ->
+    respond
+      . Wai.responseLBS
+        Http.ok200
+        [(Http.hContentType, "text/html;charset=utf-8")]
+      . Lucid.renderBS
+      $ do
+        Lucid.doctype_
+        Lucid.html_ [Lucid.lang_ "en-US"] $ do
+          Lucid.head_ $ do
+            Lucid.meta_ [Lucid.charset_ "utf-8"]
+            Lucid.title_ "Lazuli"
+          Lucid.body_ $ do
+            Lucid.h1_ "Lazuli"
 
 uncaughtExceptionHandler :: Catch.SomeException -> IO ()
 uncaughtExceptionHandler (Catch.SomeException e) =

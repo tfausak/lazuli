@@ -42,6 +42,10 @@ library
   build-depends:
     , exceptions ^>=0.10.7
     , hspec ^>=2.10.8
+    , http-types ^>=0.12.3
+    , lucid2 ^>=0.0.20221012
+    , wai ^>=3.2.3
+    , warp ^>=3.3.23
 
   exposed-modules:
     Lazuli
