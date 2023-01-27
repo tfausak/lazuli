@@ -44,3 +44,9 @@ executable lazuli
   import:         executable
   hs-source-dirs: source/executable
   main-is:        Main.hs
+
+test-suite lazuli-test-suite
+  import:         executable
+  hs-source-dirs: source/test-suite
+  main-is:        Main.hs
+  type:           exitcode-stdio-1.0

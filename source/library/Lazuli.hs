@@ -1,4 +1,7 @@
 module Lazuli where
 
-defaultMain :: IO ()
-defaultMain = pure ()
+executable :: IO ()
+executable = pure ()
+
+testSuite :: IO ()
+testSuite = pure ()
