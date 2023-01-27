@@ -3,6 +3,7 @@ module Lazuli where
 import qualified Control.Monad as Monad
 import qualified Control.Monad.Catch as Catch
 import qualified GHC.Conc as Conc
+import qualified Lazuli.Constant.Version as Version
 import qualified Lazuli.Exception.InvalidOption as InvalidOption
 import qualified Lazuli.Exception.UnexpectedArgument as UnexpectedArgument
 import qualified Lazuli.Exception.UnknownOption as UnknownOption
@@ -28,6 +29,9 @@ executable = do
   Monad.when (Config.help config) $ do
     name <- Environment.getProgName
     putStr $ GetOpt.usageInfo name Flag.optDescrs
+    Exit.exitSuccess
+  Monad.when (Config.version config) $ do
+    putStrLn Version.string
     Exit.exitSuccess
 
 uncaughtExceptionHandler :: Catch.SomeException -> IO ()

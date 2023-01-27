@@ -38,14 +38,17 @@ common executable
 
 library
   import:          library
+  autogen-modules: Paths_lazuli
   build-depends:   exceptions ^>=0.10.7
   exposed-modules:
     Lazuli
+    Lazuli.Constant.Version
     Lazuli.Exception.InvalidOption
     Lazuli.Exception.UnexpectedArgument
     Lazuli.Exception.UnknownOption
     Lazuli.Type.Config
     Lazuli.Type.Flag
+    Paths_lazuli
 
   hs-source-dirs:  source/library
 
