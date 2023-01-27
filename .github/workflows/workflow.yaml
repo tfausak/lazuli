@@ -84,7 +84,7 @@
           }
         },
         {
-          "run": "cabal run lazuli-test-suite"
+          "run": "cabal run -- lazuli-test-suite --randomize --strict"
         }
       ],
       "strategy": {

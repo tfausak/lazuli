@@ -39,7 +39,10 @@ common executable
 library
   import:          library
   autogen-modules: Paths_lazuli
-  build-depends:   exceptions ^>=0.10.7
+  build-depends:
+    , exceptions ^>=0.10.7
+    , hspec ^>=2.10.8
+
   exposed-modules:
     Lazuli
     Lazuli.Constant.Version
@@ -50,7 +53,9 @@ library
     Lazuli.Type.Flag
 
   hs-source-dirs:  source/library
-  other-modules:   Paths_lazuli
+  other-modules:
+    LazuliSpec
+    Paths_lazuli
 
 executable lazuli
   import:         executable

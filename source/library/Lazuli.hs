@@ -9,10 +9,12 @@ import qualified Lazuli.Exception.UnexpectedArgument as UnexpectedArgument
 import qualified Lazuli.Exception.UnknownOption as UnknownOption
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Flag as Flag
+import qualified LazuliSpec
 import qualified System.Console.GetOpt as GetOpt
 import qualified System.Environment as Environment
 import qualified System.Exit as Exit
 import qualified System.IO as IO
+import qualified Test.Hspec as Hspec
 
 executable :: IO ()
 executable = do
@@ -39,4 +41,4 @@ uncaughtExceptionHandler (Catch.SomeException e) =
   IO.hPutStrLn IO.stderr $ "lazuli-" <> Version.string <> ": " <> Catch.displayException e
 
 testSuite :: IO ()
-testSuite = pure ()
+testSuite = Hspec.hspec LazuliSpec.spec
