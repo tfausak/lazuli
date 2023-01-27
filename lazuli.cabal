@@ -40,6 +40,7 @@ library
   import:             library
   autogen-modules:    Paths_lazuli
   build-depends:
+    , bytestring ^>=0.11.4
     , exceptions ^>=0.10.7
     , hspec ^>=2.10.8
     , http-types ^>=0.12.3

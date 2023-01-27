@@ -2,6 +2,8 @@ module Lazuli.Main.Executable where
 
 import qualified Control.Monad as Monad
 import qualified Control.Monad.Catch as Catch
+import qualified Data.ByteString as ByteString
+import Data.Function ((&))
 import qualified GHC.Conc as Conc
 import qualified Lazuli.Constant.Header as Header
 import qualified Lazuli.Constant.Version as Version
@@ -33,7 +35,7 @@ executable = do
     putStrLn Version.string
     Exit.exitSuccess
 
-  Warp.runSettings Warp.defaultSettings $ \_request respond ->
+  Warp.runSettings settings $ \_request respond ->
     respond
       . Wai.responseLBS
         Http.ok200
@@ -57,3 +59,11 @@ executable = do
 uncaughtExceptionHandler :: Catch.SomeException -> IO ()
 uncaughtExceptionHandler (Catch.SomeException e) =
   IO.hPutStrLn IO.stderr $ "lazuli-" <> Version.string <> ": " <> Catch.displayException e
+
+settings :: Warp.Settings
+settings =
+  Warp.defaultSettings
+    & Warp.setBeforeMainLoop (putStrLn "Server started!")
+    & Warp.setGracefulShutdownTimeout (Just 30)
+    & Warp.setOnException (const uncaughtExceptionHandler)
+    & Warp.setServerName ByteString.empty
