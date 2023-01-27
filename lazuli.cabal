@@ -37,8 +37,8 @@ common executable
   ghc-options:   -rtsopts -threaded
 
 library
-  import:          library
-  autogen-modules: Paths_lazuli
+  import:             library
+  autogen-modules:    Paths_lazuli
   build-depends:
     , exceptions ^>=0.10.7
     , hspec ^>=2.10.8
@@ -47,8 +47,10 @@ library
     , wai ^>=3.2.3
     , warp ^>=3.3.23
 
+  default-extensions: OverloadedStrings
   exposed-modules:
     Lazuli
+    Lazuli.Constant.Header
     Lazuli.Constant.Version
     Lazuli.Exception.InvalidOption
     Lazuli.Exception.UnexpectedArgument
@@ -58,7 +60,7 @@ library
     Lazuli.Type.Config
     Lazuli.Type.Flag
 
-  hs-source-dirs:  source/library
+  hs-source-dirs:     source/library
   other-modules:
     Lazuli.Type.ConfigSpec
     LazuliSpec

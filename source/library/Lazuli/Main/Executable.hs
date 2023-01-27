@@ -1,10 +1,9 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Lazuli.Main.Executable where
 
 import qualified Control.Monad as Monad
 import qualified Control.Monad.Catch as Catch
 import qualified GHC.Conc as Conc
+import qualified Lazuli.Constant.Header as Header
 import qualified Lazuli.Constant.Version as Version
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Flag as Flag
@@ -38,7 +37,13 @@ executable = do
     respond
       . Wai.responseLBS
         Http.ok200
-        [(Http.hContentType, "text/html;charset=utf-8")]
+        [ (Header.contentSecurityPolicy, "default-src 'none'"),
+          (Http.hContentType, "text/html;charset=utf-8"),
+          (Header.contentTypeOptions, "nosniff"),
+          (Header.frameOptions, "DENY"),
+          (Header.referrerPolicy, "no-referrer"),
+          (Header.strictTransportSecurity, "max-age=31536000; includeSubDomains")
+        ]
       . Lucid.renderBS
       $ do
         Lucid.doctype_
