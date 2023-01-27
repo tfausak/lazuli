@@ -28,7 +28,7 @@ executable = do
   config <- Monad.foldM Config.applyFlag Config.initial flags
   Monad.when (Config.help config) $ do
     name <- Environment.getProgName
-    putStr $ GetOpt.usageInfo name Flag.optDescrs
+    putStr $ GetOpt.usageInfo (name <> " version " <> Version.string) Flag.optDescrs
     Exit.exitSuccess
   Monad.when (Config.version config) $ do
     putStrLn Version.string
@@ -36,7 +36,7 @@ executable = do
 
 uncaughtExceptionHandler :: Catch.SomeException -> IO ()
 uncaughtExceptionHandler (Catch.SomeException e) =
-  IO.hPutStrLn IO.stderr $ Catch.displayException e
+  IO.hPutStrLn IO.stderr $ "lazuli-" <> Version.string <> ": " <> Catch.displayException e
 
 testSuite :: IO ()
 testSuite = pure ()

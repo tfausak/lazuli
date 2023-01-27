@@ -48,9 +48,9 @@ library
     Lazuli.Exception.UnknownOption
     Lazuli.Type.Config
     Lazuli.Type.Flag
-    Paths_lazuli
 
   hs-source-dirs:  source/library
+  other-modules:   Paths_lazuli
 
 executable lazuli
   import:         executable
