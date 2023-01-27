@@ -24,12 +24,23 @@ common library
   default-language: Haskell2010
   ghc-options:
     -Weverything -Wno-implicit-prelude -Wno-missing-export-lists
-    -Wno-missing-safe-haskell-mode -Wno-safe
+    -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module
+    -Wno-safe
 
   if flag(pedantic)
     ghc-options: -Werror
+
+common executable
+  import:        library
+  build-depends: lazuli
+  ghc-options:   -rtsopts -threaded
 
 library
   import:          library
   exposed-modules: Lazuli
   hs-source-dirs:  source/library
+
+executable lazuli
+  import:         executable
+  hs-source-dirs: source/executable
+  main-is:        Main.hs

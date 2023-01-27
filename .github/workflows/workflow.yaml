@@ -68,6 +68,15 @@
           "run": "cabal build"
         },
         {
+          "run": "cp \"$( cabal list-bin lazuli )\" ${{ steps.artifact.outputs.directory }}"
+        },
+        {
+          "uses": "svenstaro/upx-action@v2",
+          "with": {
+            "files": "${{ steps.artifact.outputs.directory }}/lazuli${{ matrix.extension }}"
+          }
+        },
+        {
           "uses": "actions/upload-artifact@v3",
           "with": {
             "name": "lazuli-${{ github.sha }}",
@@ -87,6 +96,7 @@
               "version": "22.04"
             },
             {
+              "extension": ".exe",
               "platform": "windows",
               "version": "2022"
             }
