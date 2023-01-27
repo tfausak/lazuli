@@ -6,6 +6,73 @@
       "steps": [
         {
           "uses": "actions/checkout@v3"
+        },
+        {
+          "run": "mkdir artifact"
+        },
+        {
+          "id": "artifact",
+          "run": "echo 'directory=artifact/${{ matrix.platform }}' >> $GITHUB_OUTPUT",
+          "shell": "bash"
+        },
+        {
+          "run": "mkdir ${{ steps.artifact.outputs.directory }}"
+        },
+        {
+          "id": "haskell",
+          "uses": "haskell/actions/setup@v2",
+          "with": {
+            "cabal-version": "3.8.1.0",
+            "ghc-version": "9.4.4"
+          }
+        },
+        {
+          "run": "cabal sdist --output-dir ${{ steps.artifact.outputs.directory }}"
+        },
+        {
+          "run": "cabal configure --enable-optimization=2 --flags pedantic --jobs"
+        },
+        {
+          "run": "cat cabal.project.local"
+        },
+        {
+          "run": "cp cabal.project.local ${{ steps.artifact.outputs.directory }}"
+        },
+        {
+          "run": "cabal freeze"
+        },
+        {
+          "run": "cat cabal.project.freeze"
+        },
+        {
+          "run": "cp cabal.project.freeze ${{ steps.artifact.outputs.directory }}"
+        },
+        {
+          "run": "cabal outdated --v2-freeze-file cabal.project.freeze"
+        },
+        {
+          "uses": "actions/cache@v3",
+          "with": {
+            "key": "${{ matrix.platform }}-${{ hashFiles('cabal.project.freeze') }}",
+            "path": "${{ steps.haskell.outputs.cabal-store }}",
+            "restore-keys": "${{ matrix.platform }}-"
+          }
+        },
+        {
+          "run": "cabal build --only-download"
+        },
+        {
+          "run": "cabal build --only-dependencies"
+        },
+        {
+          "run": "cabal build"
+        },
+        {
+          "uses": "actions/upload-artifact@v3",
+          "with": {
+            "name": "lazuli-${{ github.sha }}",
+            "path": "artifact"
+          }
         }
       ],
       "strategy": {
@@ -26,6 +93,45 @@
           ]
         }
       }
+    },
+    "cabal": {
+      "name": "Cabal",
+      "runs-on": "ubuntu-22.04",
+      "steps": [
+        {
+          "uses": "actions/checkout@v3"
+        },
+        {
+          "run": "cabal check"
+        }
+      ]
+    },
+    "hlint": {
+      "name": "HLint",
+      "runs-on": "ubuntu-22.04",
+      "steps": [
+        {
+          "uses": "actions/checkout@v3"
+        },
+        {
+          "uses": "haskell/actions/hlint-setup@v2",
+          "with": {
+            "version": 3.5
+          }
+        }
+      ]
+    },
+    "ormolu": {
+      "name": "Ormolu",
+      "runs-on": "ubuntu-22.04",
+      "steps": [
+        {
+          "uses": "actions/checkout@v3"
+        },
+        {
+          "uses": "mrkkrp/ormolu-action@v9"
+        }
+      ]
     }
   },
   "name": "Workflow",
