@@ -35,26 +35,7 @@ executable = do
     putStrLn Version.string
     Exit.exitSuccess
 
-  Warp.runSettings settings $ \_request respond ->
-    respond
-      . Wai.responseLBS
-        Http.ok200
-        [ (Header.contentSecurityPolicy, "default-src 'none'"),
-          (Http.hContentType, "text/html;charset=utf-8"),
-          (Header.contentTypeOptions, "nosniff"),
-          (Header.frameOptions, "DENY"),
-          (Header.referrerPolicy, "no-referrer"),
-          (Header.strictTransportSecurity, "max-age=31536000; includeSubDomains")
-        ]
-      . Lucid.renderBS
-      $ do
-        Lucid.doctype_
-        Lucid.html_ [Lucid.lang_ "en-US"] $ do
-          Lucid.head_ $ do
-            Lucid.meta_ [Lucid.charset_ "utf-8"]
-            Lucid.title_ "Lazuli"
-          Lucid.body_ $ do
-            Lucid.h1_ "Lazuli"
+  Warp.runSettings settings application
 
 uncaughtExceptionHandler :: Catch.SomeException -> IO ()
 uncaughtExceptionHandler (Catch.SomeException e) =
@@ -67,3 +48,24 @@ settings =
     & Warp.setGracefulShutdownTimeout (Just 30)
     & Warp.setOnException (const uncaughtExceptionHandler)
     & Warp.setServerName ByteString.empty
+
+application :: Wai.Application
+application _request respond = respond
+  . Wai.responseLBS
+    Http.ok200
+    [ (Header.contentSecurityPolicy, "default-src 'none'"),
+      (Http.hContentType, "text/html;charset=utf-8"),
+      (Header.contentTypeOptions, "nosniff"),
+      (Header.frameOptions, "DENY"),
+      (Header.referrerPolicy, "no-referrer"),
+      (Header.strictTransportSecurity, "max-age=31536000; includeSubDomains")
+    ]
+  . Lucid.renderBS
+  $ do
+    Lucid.doctype_
+    Lucid.html_ [Lucid.lang_ "en-US"] $ do
+      Lucid.head_ $ do
+        Lucid.meta_ [Lucid.charset_ "utf-8"]
+        Lucid.title_ "Lazuli"
+      Lucid.body_ $ do
+        Lucid.h1_ "Lazuli"
