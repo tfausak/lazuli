@@ -116,6 +116,54 @@
         }
       ]
     },
+    "docker": {
+      "name": "Docker",
+      "needs": "build",
+      "runs-on": "ubuntu-22.04",
+      "steps": [
+        {
+          "uses": "actions/checkout@v3"
+        },
+        {
+          "uses": "actions/download-artifact@v3",
+          "with": {
+            "name": "lazuli-${{ github.sha }}",
+            "path": "artifact"
+          }
+        },
+        {
+          "run": "cp artifact/ubuntu/lazuli docker"
+        },
+        {
+          "run": "chmod +x docker/lazuli"
+        },
+        {
+          "id": "meta",
+          "uses": "docker/metadata-action@v4",
+          "with": {
+            "flavor": "latest=false",
+            "images": "ghcr.io/${{ github.repository }}",
+            "tags": "type=sha,format=long"
+          }
+        },
+        {
+          "uses": "docker/login-action@v2",
+          "with": {
+            "password": "${{ secrets.GITHUB_TOKEN }}",
+            "registry": "ghcr.io",
+            "username": "${{ github.actor }}"
+          }
+        },
+        {
+          "uses": "docker/build-push-action@v3",
+          "with": {
+            "context": "docker",
+            "push": "${{ github.event_name != 'schedule' }}",
+            "tags": "${{ steps.meta.outputs.tags }}"
+          }
+        }
+      ]
+    },
     "hlint": {
       "name": "HLint",
       "runs-on": "ubuntu-22.04",
