@@ -4,6 +4,7 @@ import qualified System.Console.GetOpt as GetOpt
 
 data Flag
   = Help
+  | Port String
   | Version
   deriving (Eq, Show)
 
@@ -18,5 +19,10 @@ optDescrs =
       []
       ["version"]
       (GetOpt.NoArg Version)
-      "Shows the version number, then exits."
+      "Shows the version number, then exits.",
+    GetOpt.Option
+      []
+      ["port"]
+      (GetOpt.ReqArg Port "NUMBER")
+      "Sets the port to listen on."
   ]

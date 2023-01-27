@@ -60,17 +60,20 @@ library
     Lazuli.Constant.Header
     Lazuli.Constant.Version
     Lazuli.Exception.InvalidOption
+    Lazuli.Exception.InvalidPort
     Lazuli.Exception.UnexpectedArgument
     Lazuli.Exception.UnknownOption
     Lazuli.Main.Executable
     Lazuli.Main.TestSuite
     Lazuli.Type.Config
     Lazuli.Type.Flag
+    Lazuli.Type.Port
     Lazuli.Type.RequestId
 
   hs-source-dirs:     source/library
   other-modules:
     Lazuli.Type.ConfigSpec
+    Lazuli.Type.PortSpec
     LazuliSpec
     Paths_lazuli
 

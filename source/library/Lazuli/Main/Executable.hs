@@ -12,6 +12,7 @@ import qualified Lazuli.Constant.Header as Header
 import qualified Lazuli.Constant.Version as Version
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Flag as Flag
+import qualified Lazuli.Type.Port as Port
 import qualified Lazuli.Type.RequestId as RequestId
 import qualified Lucid
 import qualified Network.HTTP.Types as Http
@@ -42,18 +43,19 @@ executable = do
     Exit.exitSuccess
 
   requestIdKey <- Vault.newKey
-  Warp.runSettings settings $ middleware requestIdKey application
+  Warp.runSettings (settings config) $ middleware requestIdKey application
 
 uncaughtExceptionHandler :: Catch.SomeException -> IO ()
 uncaughtExceptionHandler (Catch.SomeException e) =
   IO.hPutStrLn IO.stderr $ "lazuli-" <> Version.string <> ": " <> Catch.displayException e
 
-settings :: Warp.Settings
-settings =
+settings :: Config.Config -> Warp.Settings
+settings config =
   Warp.defaultSettings
-    & Warp.setBeforeMainLoop (putStrLn "Server started!")
+    & Warp.setBeforeMainLoop (putStrLn $ "Listening on " <> show (Config.port config) <> " ...")
     & Warp.setGracefulShutdownTimeout (Just 30)
     & Warp.setOnException (const uncaughtExceptionHandler)
+    & Warp.setPort (Port.intoPort $ Config.port config)
     & Warp.setServerName ByteString.empty
 
 application :: Wai.Application
