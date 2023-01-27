@@ -2,6 +2,7 @@ module Lazuli where
 
 import qualified Control.Monad as Monad
 import qualified Control.Monad.Catch as Catch
+import qualified GHC.Conc as Conc
 import qualified Lazuli.Exception.InvalidOption as InvalidOption
 import qualified Lazuli.Exception.UnexpectedArgument as UnexpectedArgument
 import qualified Lazuli.Exception.UnknownOption as UnknownOption
@@ -10,9 +11,13 @@ import qualified Lazuli.Type.Flag as Flag
 import qualified System.Console.GetOpt as GetOpt
 import qualified System.Environment as Environment
 import qualified System.Exit as Exit
+import qualified System.IO as IO
 
 executable :: IO ()
 executable = do
+  handler <- Conc.getUncaughtExceptionHandler
+  Conc.setUncaughtExceptionHandler $ Catch.handle handler . uncaughtExceptionHandler
+
   arguments <- Environment.getArgs
   let (flags, unexpectedArguments, unknownOptions, invalidOptions) =
         GetOpt.getOpt' GetOpt.Permute Flag.optDescrs arguments
@@ -24,6 +29,10 @@ executable = do
     name <- Environment.getProgName
     putStr $ GetOpt.usageInfo name Flag.optDescrs
     Exit.exitSuccess
+
+uncaughtExceptionHandler :: Catch.SomeException -> IO ()
+uncaughtExceptionHandler (Catch.SomeException e) =
+  IO.hPutStrLn IO.stderr $ Catch.displayException e
 
 testSuite :: IO ()
 testSuite = pure ()
