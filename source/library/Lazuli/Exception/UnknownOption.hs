@@ -1,9 +1,9 @@
 module Lazuli.Exception.UnknownOption where
 
-import qualified Control.Exception as Exception
+import qualified Control.Monad.Catch as Catch
 
 newtype UnknownOption
   = UnknownOption String
   deriving (Eq, Show)
 
-instance Exception.Exception UnknownOption
+instance Catch.Exception UnknownOption

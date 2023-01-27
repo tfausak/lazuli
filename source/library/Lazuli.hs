@@ -1,7 +1,7 @@
 module Lazuli where
 
-import qualified Control.Exception as Exception
 import qualified Control.Monad as Monad
+import qualified Control.Monad.Catch as Catch
 import qualified Lazuli.Exception.InvalidOption as InvalidOption
 import qualified Lazuli.Exception.UnexpectedArgument as UnexpectedArgument
 import qualified Lazuli.Exception.UnknownOption as UnknownOption
@@ -16,9 +16,9 @@ executable = do
   arguments <- Environment.getArgs
   let (flags, unexpectedArguments, unknownOptions, invalidOptions) =
         GetOpt.getOpt' GetOpt.Permute Flag.optDescrs arguments
-  mapM_ (Exception.throwIO . UnexpectedArgument.UnexpectedArgument) unexpectedArguments
-  mapM_ (Exception.throwIO . UnknownOption.UnknownOption) unknownOptions
-  mapM_ (Exception.throwIO . InvalidOption.InvalidOption) invalidOptions
+  mapM_ (Catch.throwM . UnexpectedArgument.UnexpectedArgument) unexpectedArguments
+  mapM_ (Catch.throwM . UnknownOption.UnknownOption) unknownOptions
+  mapM_ (Catch.throwM . InvalidOption.InvalidOption) invalidOptions
   config <- Monad.foldM Config.applyFlag Config.initial flags
   Monad.when (Config.help config) $ do
     name <- Environment.getProgName

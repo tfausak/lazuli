@@ -1,9 +1,9 @@
 module Lazuli.Exception.UnexpectedArgument where
 
-import qualified Control.Exception as Exception
+import qualified Control.Monad.Catch as Catch
 
 newtype UnexpectedArgument
   = UnexpectedArgument String
   deriving (Eq, Show)
 
-instance Exception.Exception UnexpectedArgument
+instance Catch.Exception UnexpectedArgument

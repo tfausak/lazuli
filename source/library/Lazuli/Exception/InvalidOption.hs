@@ -1,9 +1,9 @@
 module Lazuli.Exception.InvalidOption where
 
-import qualified Control.Exception as Exception
+import qualified Control.Monad.Catch as Catch
 
 newtype InvalidOption
   = InvalidOption String
   deriving (Eq, Show)
 
-instance Exception.Exception InvalidOption
+instance Catch.Exception InvalidOption

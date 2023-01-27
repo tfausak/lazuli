@@ -38,6 +38,7 @@ common executable
 
 library
   import:          library
+  build-depends:   exceptions ^>=0.10.7
   exposed-modules:
     Lazuli
     Lazuli.Exception.InvalidOption
