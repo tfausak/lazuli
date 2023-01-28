@@ -4,13 +4,14 @@ import qualified Control.Monad as Monad
 import qualified Control.Monad.Catch as Catch
 import qualified Data.ByteString as ByteString
 import Data.Function ((&))
-import qualified Data.Vault.Lazy as Vault
 import qualified GHC.Conc as Conc
 import qualified Lazuli.Action.Config.Load as Config.Load
+import qualified Lazuli.Action.Context.Load as Context.Load
 import qualified Lazuli.Constant.Version as Version
 import qualified Lazuli.Server.Application as Application
 import qualified Lazuli.Server.Middleware as Middleware
 import qualified Lazuli.Type.Config as Config
+import qualified Lazuli.Type.Context as Context
 import qualified Lazuli.Type.Flag as Flag
 import qualified Network.Wai.Handler.Warp as Warp
 import qualified System.Console.GetOpt as GetOpt
@@ -35,8 +36,8 @@ executable = do
     putStrLn Version.string
     Exit.exitSuccess
 
-  requestIdKey <- Vault.newKey
-  Warp.runSettings (settings config) $ Middleware.middleware requestIdKey Application.application
+  context <- Context.Load.run config
+  Warp.runSettings (settings $ Context.config context) $ Middleware.middleware (Context.requestIdKey context) Application.application
 
 uncaughtExceptionHandler :: Catch.SomeException -> IO ()
 uncaughtExceptionHandler (Catch.SomeException e) =

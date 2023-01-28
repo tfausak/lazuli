@@ -63,6 +63,7 @@ library
   exposed-modules:
     Lazuli
     Lazuli.Action.Config.Load
+    Lazuli.Action.Context.Load
     Lazuli.Constant.Header
     Lazuli.Constant.Version
     Lazuli.Exception.InvalidOption
@@ -75,6 +76,7 @@ library
     Lazuli.Server.Application
     Lazuli.Server.Middleware
     Lazuli.Type.Config
+    Lazuli.Type.Context
     Lazuli.Type.Flag
     Lazuli.Type.Port
     Lazuli.Type.RequestId
@@ -82,7 +84,9 @@ library
   hs-source-dirs:     source/library
   other-modules:
     Lazuli.Action.Config.LoadSpec
+    Lazuli.Action.Context.LoadSpec
     Lazuli.Extra.GetOptSpec
+    Lazuli.Extra.HspecSpec
     Lazuli.Type.ConfigSpec
     Lazuli.Type.PortSpec
     Lazuli.Type.RequestIdSpec
