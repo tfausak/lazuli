@@ -53,6 +53,7 @@ library
     , witch ^>=1.1.6
 
   default-extensions:
+    ApplicativeDo
     DerivingVia
     FlexibleInstances
     MultiParamTypeClasses
@@ -61,11 +62,13 @@ library
 
   exposed-modules:
     Lazuli
+    Lazuli.Action.Config.Load
     Lazuli.Constant.Header
     Lazuli.Constant.Version
     Lazuli.Exception.InvalidOption
     Lazuli.Exception.UnexpectedArgument
     Lazuli.Exception.UnknownOption
+    Lazuli.Extra.GetOpt
     Lazuli.Main.Executable
     Lazuli.Main.TestSuite
     Lazuli.Server.Application

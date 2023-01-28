@@ -6,6 +6,7 @@ import qualified Data.ByteString as ByteString
 import Data.Function ((&))
 import qualified Data.Vault.Lazy as Vault
 import qualified GHC.Conc as Conc
+import qualified Lazuli.Action.Config.Load as Config.Load
 import qualified Lazuli.Constant.Version as Version
 import qualified Lazuli.Server.Application as Application
 import qualified Lazuli.Server.Middleware as Middleware
@@ -23,8 +24,7 @@ executable = do
   handler <- Conc.getUncaughtExceptionHandler
   Conc.setUncaughtExceptionHandler $ Catch.handle handler . uncaughtExceptionHandler
 
-  arguments <- Environment.getArgs
-  config <- Config.fromArguments arguments
+  config <- Config.Load.run
 
   Monad.when (Config.help config) $ do
     name <- Environment.getProgName
