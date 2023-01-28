@@ -68,6 +68,8 @@ library
     Lazuli.Exception.UnknownOption
     Lazuli.Main.Executable
     Lazuli.Main.TestSuite
+    Lazuli.Server.Application
+    Lazuli.Server.Middleware
     Lazuli.Type.Config
     Lazuli.Type.Flag
     Lazuli.Type.Port
