@@ -50,17 +50,20 @@ library
     , vault ^>=0.3.1
     , wai ^>=3.2.3
     , warp ^>=3.3.23
+    , witch ^>=1.1.6
 
   default-extensions:
     DerivingVia
+    FlexibleInstances
+    MultiParamTypeClasses
     OverloadedStrings
+    TypeApplications
 
   exposed-modules:
     Lazuli
     Lazuli.Constant.Header
     Lazuli.Constant.Version
     Lazuli.Exception.InvalidOption
-    Lazuli.Exception.InvalidPort
     Lazuli.Exception.UnexpectedArgument
     Lazuli.Exception.UnknownOption
     Lazuli.Main.Executable

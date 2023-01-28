@@ -7,12 +7,12 @@ import Data.Function ((&))
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
 import qualified Data.Vault.Lazy as Vault
+import qualified Data.Word as Word
 import qualified GHC.Conc as Conc
 import qualified Lazuli.Constant.Header as Header
 import qualified Lazuli.Constant.Version as Version
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Flag as Flag
-import qualified Lazuli.Type.Port as Port
 import qualified Lazuli.Type.RequestId as RequestId
 import qualified Lucid
 import qualified Network.HTTP.Types as Http
@@ -24,6 +24,7 @@ import qualified System.Exit as Exit
 import qualified System.IO as IO
 import qualified System.Random as Random
 import qualified Text.Printf as Printf
+import qualified Witch
 
 executable :: IO ()
 executable = do
@@ -55,7 +56,7 @@ settings config =
     & Warp.setBeforeMainLoop (putStrLn $ "Listening on " <> show (Config.port config) <> " ...")
     & Warp.setGracefulShutdownTimeout (Just 30)
     & Warp.setOnException (const uncaughtExceptionHandler)
-    & Warp.setPort (Port.intoPort $ Config.port config)
+    & Warp.setPort (Witch.into @Warp.Port $ Config.port config)
     & Warp.setServerName ByteString.empty
 
 application :: Wai.Application
@@ -84,4 +85,4 @@ middleware requestIdKey handle request respond = do
   requestId <- Random.randomIO
   let vault = Vault.insert requestIdKey requestId $ Wai.vault request
   handle request {Wai.vault = vault} $ \response -> do
-    respond $ Wai.mapResponseHeaders ((Header.lazuliRequestId, Text.encodeUtf8 . Text.pack . Printf.printf "%016x" $ RequestId.intoWord64 requestId) :) response
+    respond $ Wai.mapResponseHeaders ((Header.lazuliRequestId, Text.encodeUtf8 . Text.pack . Printf.printf "%016x" $ Witch.into @Word.Word64 requestId) :) response

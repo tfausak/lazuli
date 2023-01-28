@@ -8,6 +8,7 @@ import qualified Lazuli.Exception.UnknownOption as UnknownOption
 import qualified Lazuli.Type.Flag as Flag
 import qualified Lazuli.Type.Port as Port
 import qualified System.Console.GetOpt as GetOpt
+import qualified Witch
 
 data Config = Config
   { help :: Bool,
@@ -27,7 +28,7 @@ initial =
 applyFlag :: (Catch.MonadThrow m) => Config -> Flag.Flag -> m Config
 applyFlag config flag = case flag of
   Flag.Help -> pure config {help = True}
-  Flag.Port s -> case Port.fromString s of
+  Flag.Port s -> case Witch.tryFrom s of
     Left e -> Catch.throwM e
     Right p -> pure config {port = p}
   Flag.Version -> pure config {version = True}
