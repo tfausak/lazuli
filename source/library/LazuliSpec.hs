@@ -5,6 +5,7 @@ import qualified Lazuli.Action.Context.LoadSpec
 import qualified Lazuli.Extra.GetOptSpec
 import qualified Lazuli.Extra.HspecSpec
 import qualified Lazuli.Extra.ListSpec
+import qualified Lazuli.Middleware.AddRequestIdSpec
 import qualified Lazuli.Middleware.AddSecurityHeadersSpec
 import qualified Lazuli.Type.ConfigSpec
 import qualified Lazuli.Type.PortSpec
@@ -18,6 +19,7 @@ spec = do
   Lazuli.Extra.GetOptSpec.spec
   Lazuli.Extra.HspecSpec.spec
   Lazuli.Extra.ListSpec.spec
+  Lazuli.Middleware.AddRequestIdSpec.spec
   Lazuli.Middleware.AddSecurityHeadersSpec.spec
   Lazuli.Type.ConfigSpec.spec
   Lazuli.Type.PortSpec.spec

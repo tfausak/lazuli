@@ -73,8 +73,10 @@ library
     Lazuli.Extra.GetOpt
     Lazuli.Extra.Hspec
     Lazuli.Extra.List
+    Lazuli.Extra.Wai
     Lazuli.Main.Executable
     Lazuli.Main.TestSuite
+    Lazuli.Middleware.AddRequestId
     Lazuli.Middleware.AddSecurityHeaders
     Lazuli.Server.Application
     Lazuli.Server.Middleware
@@ -91,6 +93,7 @@ library
     Lazuli.Extra.GetOptSpec
     Lazuli.Extra.HspecSpec
     Lazuli.Extra.ListSpec
+    Lazuli.Middleware.AddRequestIdSpec
     Lazuli.Middleware.AddSecurityHeadersSpec
     Lazuli.Type.ConfigSpec
     Lazuli.Type.PortSpec
