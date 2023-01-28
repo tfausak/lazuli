@@ -49,6 +49,7 @@ library
     , text ^>=2.0.1
     , vault ^>=0.3.1
     , wai ^>=3.2.3
+    , wai-extra ^>=3.1.13
     , warp ^>=3.3.23
     , witch ^>=1.1.6
 
@@ -71,8 +72,10 @@ library
     Lazuli.Exception.UnknownOption
     Lazuli.Extra.GetOpt
     Lazuli.Extra.Hspec
+    Lazuli.Extra.List
     Lazuli.Main.Executable
     Lazuli.Main.TestSuite
+    Lazuli.Middleware.AddSecurityHeaders
     Lazuli.Server.Application
     Lazuli.Server.Middleware
     Lazuli.Type.Config
@@ -87,6 +90,8 @@ library
     Lazuli.Action.Context.LoadSpec
     Lazuli.Extra.GetOptSpec
     Lazuli.Extra.HspecSpec
+    Lazuli.Extra.ListSpec
+    Lazuli.Middleware.AddSecurityHeadersSpec
     Lazuli.Type.ConfigSpec
     Lazuli.Type.PortSpec
     Lazuli.Type.RequestIdSpec

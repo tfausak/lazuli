@@ -1,6 +1,5 @@
 module Lazuli.Server.Application where
 
-import qualified Lazuli.Constant.Header as Header
 import qualified Lucid
 import qualified Network.HTTP.Types as Http
 import qualified Network.Wai as Wai
@@ -9,13 +8,7 @@ application :: Wai.Application
 application _request respond = respond
   . Wai.responseLBS
     Http.ok200
-    [ (Header.contentSecurityPolicy, "default-src 'none'"),
-      (Http.hContentType, "text/html;charset=utf-8"),
-      (Header.contentTypeOptions, "nosniff"),
-      (Header.frameOptions, "DENY"),
-      (Header.referrerPolicy, "no-referrer"),
-      (Header.strictTransportSecurity, "max-age=31536000; includeSubDomains")
-    ]
+    [(Http.hContentType, "text/html;charset=utf-8")]
   . Lucid.renderBS
   $ do
     Lucid.doctype_
