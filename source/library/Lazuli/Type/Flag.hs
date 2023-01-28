@@ -3,9 +3,9 @@ module Lazuli.Type.Flag where
 import qualified System.Console.GetOpt as GetOpt
 
 data Flag
-  = Help
+  = Help Bool
   | Port String
-  | Version
+  | Version Bool
   deriving (Eq, Show)
 
 optDescrs :: [GetOpt.OptDescr Flag]
@@ -13,13 +13,23 @@ optDescrs =
   [ GetOpt.Option
       ['h', '?']
       ["help"]
-      (GetOpt.NoArg Help)
+      (GetOpt.NoArg $ Help True)
       "Shows this help message, then exits.",
     GetOpt.Option
       []
+      ["no-help"]
+      (GetOpt.NoArg $ Help False)
+      "",
+    GetOpt.Option
+      []
       ["version"]
-      (GetOpt.NoArg Version)
+      (GetOpt.NoArg $ Version True)
       "Shows the version number, then exits.",
+    GetOpt.Option
+      []
+      ["no-version"]
+      (GetOpt.NoArg $ Version False)
+      "",
     GetOpt.Option
       []
       ["port"]

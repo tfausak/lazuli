@@ -7,7 +7,7 @@ import qualified Witch
 
 spec :: Hspec.Spec
 spec = Hspec.describe "Lazuli.Type.Port" $ do
-  Hspec.describe "fromString" $ do
+  Hspec.describe "TryFrom String" $ do
     Hspec.it "succeeds with a valid port" $ do
       Witch.tryFrom @String @Port.Port "1234" `Hspec.shouldSatisfy` Either.isRight
 

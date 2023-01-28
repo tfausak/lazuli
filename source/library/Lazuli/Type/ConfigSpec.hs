@@ -9,10 +9,10 @@ spec :: Hspec.Spec
 spec = Hspec.describe "Lazuli.Type.Config" $ do
   Hspec.describe "applyFlag" $ do
     Hspec.it "handles the help flag" $ do
-      Config.applyFlag Config.initial Flag.Help `Hspec.shouldBe` Just Config.initial {Config.help = True}
+      Config.applyFlag Config.initial (Flag.Help True) `Hspec.shouldBe` Just Config.initial {Config.help = True}
 
     Hspec.it "handles the version flag" $ do
-      Config.applyFlag Config.initial Flag.Version `Hspec.shouldBe` Just Config.initial {Config.version = True}
+      Config.applyFlag Config.initial (Flag.Version True) `Hspec.shouldBe` Just Config.initial {Config.version = True}
 
     Hspec.it "sets a valid port" $ do
       Config.applyFlag Config.initial (Flag.Port "1234") `Hspec.shouldBe` Just Config.initial {Config.port = Port.Port 1234}

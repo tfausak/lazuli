@@ -22,8 +22,8 @@ initial =
 
 applyFlag :: (Catch.MonadThrow m) => Config -> Flag.Flag -> m Config
 applyFlag config flag = case flag of
-  Flag.Help -> pure config {help = True}
+  Flag.Help h -> pure config {help = h}
   Flag.Port s -> case Witch.tryFrom s of
     Left e -> Catch.throwM e
     Right p -> pure config {port = p}
-  Flag.Version -> pure config {version = True}
+  Flag.Version v -> pure config {version = v}
