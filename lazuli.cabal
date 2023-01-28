@@ -69,6 +69,7 @@ library
     Lazuli.Exception.UnexpectedArgument
     Lazuli.Exception.UnknownOption
     Lazuli.Extra.GetOpt
+    Lazuli.Extra.Hspec
     Lazuli.Main.Executable
     Lazuli.Main.TestSuite
     Lazuli.Server.Application
@@ -80,8 +81,11 @@ library
 
   hs-source-dirs:     source/library
   other-modules:
+    Lazuli.Action.Config.LoadSpec
+    Lazuli.Extra.GetOptSpec
     Lazuli.Type.ConfigSpec
     Lazuli.Type.PortSpec
+    Lazuli.Type.RequestIdSpec
     LazuliSpec
     Paths_lazuli
 

@@ -11,20 +11,16 @@ import qualified System.Environment as Environment
 run :: IO Config.Config
 run = do
   arguments <- Environment.getArgs
-  runWith arguments optionToEnvironment Environment.lookupEnv
+  runWith Environment.lookupEnv arguments
 
 runWith ::
   (Catch.MonadThrow m) =>
-  [String] ->
-  (String -> String) ->
   (String -> m (Maybe String)) ->
+  [String] ->
   m Config.Config
-runWith arguments mangle lookupEnv = do
-  environmentFlags <- GetOpt.fromEnvironment Flag.optDescrs mangle lookupEnv
+runWith lookupEnv arguments = do
+  let modify :: String -> String
+      modify = mappend "LAZULI_" . fmap (\c -> if c == '-' then '_' else Char.toUpper c)
+  environmentFlags <- GetOpt.fromEnvironment Flag.optDescrs modify lookupEnv
   argumentFlags <- GetOpt.fromArguments Flag.optDescrs arguments
   Monad.foldM Config.applyFlag Config.initial $ environmentFlags <> argumentFlags
-
-optionToEnvironment :: String -> String
-optionToEnvironment =
-  mappend "LAZULI_"
-    . fmap (\c -> if c == '-' then '_' else Char.toUpper c)

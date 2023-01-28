@@ -22,10 +22,10 @@ fromEnvironment ::
   (String -> String) ->
   (String -> m (Maybe String)) ->
   m [a]
-fromEnvironment optDescrs mangle lookupEnv =
+fromEnvironment optDescrs modify lookupEnv =
   fmap concat . Traversable.for optDescrs $ \(GetOpt.Option _ strings argDescr _) ->
     fmap Maybe.catMaybes . Traversable.for strings $ \string -> do
-      maybeValue <- lookupEnv $ mangle string
+      maybeValue <- lookupEnv $ modify string
       pure $ case argDescr of
         GetOpt.NoArg x -> fmap (const x) maybeValue
         GetOpt.ReqArg f _ -> fmap f maybeValue
