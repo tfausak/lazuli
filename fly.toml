@@ -3,7 +3,7 @@
   protocol = "tcp"
 
   [[services.http_checks]]
-    path = "/"
+    path = "/api/health-check"
 
   [[services.ports]]
     force_https = true

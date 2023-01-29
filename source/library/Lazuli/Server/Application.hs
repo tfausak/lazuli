@@ -21,6 +21,7 @@ application request respond =
             Lucid.title_ "Lazuli"
           Lucid.body_ $ do
             Lucid.h1_ "Lazuli"
+    ("GET", ["api", "health-check"]) -> respond $ statusResponse Http.ok200
     _ -> respond $ statusResponse Http.notFound404
 
 statusResponse :: Http.Status -> Wai.Response
