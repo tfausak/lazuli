@@ -67,6 +67,7 @@ library
     Lazuli.Action.Context.Load
     Lazuli.Action.Exception.Handle
     Lazuli.Constant.Header
+    Lazuli.Constant.Mime
     Lazuli.Constant.Version
     Lazuli.Exception.InvalidOption
     Lazuli.Exception.TestError
