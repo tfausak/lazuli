@@ -10,7 +10,7 @@ middleware =
     foldr
       List.appendIfMissing
       headers
-      [ (Header.contentSecurityPolicy, "default-src 'none'"),
+      [ (Header.contentSecurityPolicy, "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'"),
         (Header.contentTypeOptions, "nosniff"),
         (Header.frameOptions, "DENY"),
         (Header.referrerPolicy, "no-referrer"),
