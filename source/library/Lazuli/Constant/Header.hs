@@ -22,3 +22,6 @@ referrerPolicy = "Referrer-Policy"
 
 strictTransportSecurity :: Http.HeaderName
 strictTransportSecurity = "Strict-Transport-Security"
+
+xssProtection :: Http.HeaderName
+xssProtection = "X-XSS-Protection"

@@ -38,6 +38,10 @@ spec = Hspec.describe "Lazuli.Middleware.AddSecurityHeaders" $ do
       headers <- getHeaders emptyApplication
       fmap fst headers `Hspec.shouldContain` [Header.strictTransportSecurity]
 
+    Hspec.it "sets the xss protection header" $ do
+      headers <- getHeaders emptyApplication
+      fmap fst headers `Hspec.shouldContain` [Header.xssProtection]
+
     Hspec.it "does not overwrite an existing header" $ do
       headers <- getHeaders headerApplication
       headers `Hspec.shouldContain` [(Header.contentSecurityPolicy, "custom-csp")]

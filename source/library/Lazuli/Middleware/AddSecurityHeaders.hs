@@ -15,5 +15,6 @@ middleware =
         (Header.frameOptions, "DENY"),
         (Header.permissionsPolicy, "camera=(), microphone=()"),
         (Header.referrerPolicy, "no-referrer"),
-        (Header.strictTransportSecurity, "max-age=31536000; includeSubDomains")
+        (Header.strictTransportSecurity, "max-age=31536000; includeSubDomains"),
+        (Header.xssProtection, "1; mode=block")
       ]
