@@ -12,6 +12,7 @@ middleware =
       headers
       [ (Header.contentSecurityPolicy, "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'"),
         (Header.contentTypeOptions, "nosniff"),
+        (Header.featurePolicy, "camera 'none'; microphone 'none'"),
         (Header.frameOptions, "DENY"),
         (Header.permissionsPolicy, "camera=(), microphone=()"),
         (Header.referrerPolicy, "no-referrer"),

@@ -18,6 +18,10 @@ spec = Hspec.describe "Lazuli.Middleware.AddSecurityHeaders" $ do
       headers <- getHeaders emptyApplication
       fmap fst headers `Hspec.shouldContain` [Header.contentTypeOptions]
 
+    Hspec.it "sets the feature policy header" $ do
+      headers <- getHeaders emptyApplication
+      fmap fst headers `Hspec.shouldContain` [Header.featurePolicy]
+
     Hspec.it "sets the frame options header" $ do
       headers <- getHeaders emptyApplication
       fmap fst headers `Hspec.shouldContain` [Header.frameOptions]

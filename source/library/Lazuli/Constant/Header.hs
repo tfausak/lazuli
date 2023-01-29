@@ -8,6 +8,9 @@ contentSecurityPolicy = "Content-Security-Policy"
 contentTypeOptions :: Http.HeaderName
 contentTypeOptions = "X-Content-Type-Options"
 
+featurePolicy :: Http.HeaderName
+featurePolicy = "Feature-Policy"
+
 frameOptions :: Http.HeaderName
 frameOptions = "X-Frame-Options"
 
