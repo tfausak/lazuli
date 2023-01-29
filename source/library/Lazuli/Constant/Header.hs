@@ -14,6 +14,9 @@ frameOptions = "X-Frame-Options"
 lazuliRequestId :: Http.HeaderName
 lazuliRequestId = "Lazuli-Request-Id"
 
+permissionsPolicy :: Http.HeaderName
+permissionsPolicy = "Permissions-Policy"
+
 referrerPolicy :: Http.HeaderName
 referrerPolicy = "Referrer-Policy"
 

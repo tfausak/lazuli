@@ -13,6 +13,7 @@ middleware =
       [ (Header.contentSecurityPolicy, "base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'"),
         (Header.contentTypeOptions, "nosniff"),
         (Header.frameOptions, "DENY"),
+        (Header.permissionsPolicy, "camera=(), microphone=()"),
         (Header.referrerPolicy, "no-referrer"),
         (Header.strictTransportSecurity, "max-age=31536000; includeSubDomains")
       ]

@@ -22,6 +22,10 @@ spec = Hspec.describe "Lazuli.Middleware.AddSecurityHeaders" $ do
       headers <- getHeaders emptyApplication
       fmap fst headers `Hspec.shouldContain` [Header.frameOptions]
 
+    Hspec.it "sets the permissions policy header" $ do
+      headers <- getHeaders emptyApplication
+      fmap fst headers `Hspec.shouldContain` [Header.permissionsPolicy]
+
     Hspec.it "sets the referrer policy header" $ do
       headers <- getHeaders emptyApplication
       fmap fst headers `Hspec.shouldContain` [Header.referrerPolicy]
