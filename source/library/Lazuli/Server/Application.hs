@@ -1,5 +1,7 @@
 module Lazuli.Server.Application where
 
+import qualified Control.Monad.Catch as Catch
+import qualified Lazuli.Exception.TestError as TestError
 import qualified Lucid
 import qualified Network.HTTP.Types as Http
 import qualified Network.Wai as Wai
@@ -22,6 +24,7 @@ application request respond =
           Lucid.body_ $ do
             Lucid.h1_ "Lazuli"
     ("GET", ["api", "health-check"]) -> respond $ statusResponse Http.ok200
+    ("POST", ["api", "throw"]) -> Catch.throwM TestError.TestError
     _ -> respond $ statusResponse Http.notFound404
 
 statusResponse :: Http.Status -> Wai.Response

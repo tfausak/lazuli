@@ -65,9 +65,11 @@ library
     Lazuli
     Lazuli.Action.Config.Load
     Lazuli.Action.Context.Load
+    Lazuli.Action.Exception.Handle
     Lazuli.Constant.Header
     Lazuli.Constant.Version
     Lazuli.Exception.InvalidOption
+    Lazuli.Exception.TestError
     Lazuli.Exception.UnexpectedArgument
     Lazuli.Exception.UnknownOption
     Lazuli.Extra.GetOpt
@@ -78,6 +80,7 @@ library
     Lazuli.Main.TestSuite
     Lazuli.Middleware.AddRequestId
     Lazuli.Middleware.AddSecurityHeaders
+    Lazuli.Middleware.HandleExceptions
     Lazuli.Middleware.LogResponses
     Lazuli.Server.Application
     Lazuli.Server.Middleware
@@ -91,11 +94,13 @@ library
   other-modules:
     Lazuli.Action.Config.LoadSpec
     Lazuli.Action.Context.LoadSpec
+    Lazuli.Action.Exception.HandleSpec
     Lazuli.Extra.GetOptSpec
     Lazuli.Extra.HspecSpec
     Lazuli.Extra.ListSpec
     Lazuli.Middleware.AddRequestIdSpec
     Lazuli.Middleware.AddSecurityHeadersSpec
+    Lazuli.Middleware.HandleExceptionsSpec
     Lazuli.Middleware.LogResponsesSpec
     Lazuli.Type.ConfigSpec
     Lazuli.Type.PortSpec
