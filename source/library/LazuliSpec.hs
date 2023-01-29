@@ -7,6 +7,7 @@ import qualified Lazuli.Extra.HspecSpec
 import qualified Lazuli.Extra.ListSpec
 import qualified Lazuli.Middleware.AddRequestIdSpec
 import qualified Lazuli.Middleware.AddSecurityHeadersSpec
+import qualified Lazuli.Middleware.LogResponsesSpec
 import qualified Lazuli.Type.ConfigSpec
 import qualified Lazuli.Type.PortSpec
 import qualified Lazuli.Type.RequestIdSpec
@@ -21,6 +22,7 @@ spec = do
   Lazuli.Extra.ListSpec.spec
   Lazuli.Middleware.AddRequestIdSpec.spec
   Lazuli.Middleware.AddSecurityHeadersSpec.spec
+  Lazuli.Middleware.LogResponsesSpec.spec
   Lazuli.Type.ConfigSpec.spec
   Lazuli.Type.PortSpec.spec
   Lazuli.Type.RequestIdSpec.spec

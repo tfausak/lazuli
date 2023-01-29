@@ -8,8 +8,6 @@ import qualified GHC.Conc as Conc
 import qualified Lazuli.Action.Config.Load as Config.Load
 import qualified Lazuli.Action.Context.Load as Context.Load
 import qualified Lazuli.Constant.Version as Version
-import qualified Lazuli.Middleware.AddRequestId as AddRequestId
-import qualified Lazuli.Middleware.AddSecurityHeaders as AddSecurityHeaders
 import qualified Lazuli.Server.Application as Application
 import qualified Lazuli.Server.Middleware as Middleware
 import qualified Lazuli.Type.Config as Config
@@ -39,10 +37,8 @@ executable = do
     Exit.exitSuccess
 
   context <- Context.Load.run config
-  Warp.runSettings (settings $ Context.config context)
-    . AddRequestId.middleware (Context.requestIdKey context)
-    . Middleware.middleware (Context.requestIdKey context)
-    $ AddSecurityHeaders.middleware Application.application
+  Warp.runSettings (settings $ Context.config context) $
+    Middleware.middleware (Context.requestIdKey context) Application.application
 
 uncaughtExceptionHandler :: Catch.SomeException -> IO ()
 uncaughtExceptionHandler (Catch.SomeException e) =

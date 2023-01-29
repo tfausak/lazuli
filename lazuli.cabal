@@ -78,6 +78,7 @@ library
     Lazuli.Main.TestSuite
     Lazuli.Middleware.AddRequestId
     Lazuli.Middleware.AddSecurityHeaders
+    Lazuli.Middleware.LogResponses
     Lazuli.Server.Application
     Lazuli.Server.Middleware
     Lazuli.Type.Config
@@ -95,6 +96,7 @@ library
     Lazuli.Extra.ListSpec
     Lazuli.Middleware.AddRequestIdSpec
     Lazuli.Middleware.AddSecurityHeadersSpec
+    Lazuli.Middleware.LogResponsesSpec
     Lazuli.Type.ConfigSpec
     Lazuli.Type.PortSpec
     Lazuli.Type.RequestIdSpec
