@@ -23,9 +23,6 @@ import qualified Witch
 
 executable :: IO ()
 executable = do
-  handler <- Conc.getUncaughtExceptionHandler
-  Conc.setUncaughtExceptionHandler $ Catch.handle handler . Exception.Handle.run
-
   config <- Config.Load.run
 
   Monad.when (Config.help config) $ do
@@ -38,15 +35,20 @@ executable = do
     Exit.exitSuccess
 
   context <- Context.Load.run config
-  Warp.runSettings (settings $ Context.config context) $
-    Middleware.middleware (Context.requestIdKey context) Application.application
 
-settings :: Config.Config -> Warp.Settings
-settings config =
-  Warp.defaultSettings
-    & Warp.setBeforeMainLoop (putStrLn $ "Listening on " <> show (Config.port config) <> " ...")
-    & Warp.setGracefulShutdownTimeout (Just 30)
-    & Warp.setOnException (const Exception.Handle.run)
-    & Warp.setOnExceptionResponse (const $ Application.statusResponse Http.internalServerError500)
-    & Warp.setPort (Witch.into @Warp.Port $ Config.port config)
-    & Warp.setServerName ByteString.empty
+  handler <- Conc.getUncaughtExceptionHandler
+  Conc.setUncaughtExceptionHandler $ Catch.handle handler . Exception.Handle.run context
+
+  Warp.runSettings (settings context) $
+    Middleware.middleware context Application.application
+
+settings :: Context.Context -> Warp.Settings
+settings context =
+  let port = Config.port $ Context.config context
+   in Warp.defaultSettings
+        & Warp.setBeforeMainLoop (putStrLn $ "Listening on " <> show port <> " ...")
+        & Warp.setGracefulShutdownTimeout (Just 30)
+        & Warp.setOnException (const $ Exception.Handle.run context)
+        & Warp.setOnExceptionResponse (const $ Application.statusResponse Http.internalServerError500)
+        & Warp.setPort (Witch.into @Warp.Port port)
+        & Warp.setServerName ByteString.empty

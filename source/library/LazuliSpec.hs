@@ -13,6 +13,7 @@ import qualified Lazuli.Middleware.LogResponsesSpec
 import qualified Lazuli.Type.ConfigSpec
 import qualified Lazuli.Type.PortSpec
 import qualified Lazuli.Type.RequestIdSpec
+import qualified Lazuli.Type.UrlSpec
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -30,3 +31,4 @@ spec = do
   Lazuli.Type.ConfigSpec.spec
   Lazuli.Type.PortSpec.spec
   Lazuli.Type.RequestIdSpec.spec
+  Lazuli.Type.UrlSpec.spec

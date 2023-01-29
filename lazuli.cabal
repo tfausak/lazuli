@@ -43,8 +43,12 @@ library
     , bytestring ^>=0.11.4
     , exceptions ^>=0.10.7
     , hspec ^>=2.10.8
+    , http-client ^>=0.7.13
+    , http-client-tls ^>=0.3.6
     , http-types ^>=0.12.3
     , lucid2 ^>=0.0.20221012
+    , network-uri ^>=2.6.4
+    , patrol ^>=1.0.0
     , random ^>=1.2.1
     , text ^>=2.0.1
     , vault ^>=0.3.1
@@ -90,6 +94,7 @@ library
     Lazuli.Type.Flag
     Lazuli.Type.Port
     Lazuli.Type.RequestId
+    Lazuli.Type.Url
 
   hs-source-dirs:     source/library
   other-modules:
@@ -106,6 +111,7 @@ library
     Lazuli.Type.ConfigSpec
     Lazuli.Type.PortSpec
     Lazuli.Type.RequestIdSpec
+    Lazuli.Type.UrlSpec
     LazuliSpec
     Paths_lazuli
 

@@ -5,6 +5,7 @@ import qualified System.Console.GetOpt as GetOpt
 data Flag
   = Help Bool
   | Port String
+  | SentryDsn String
   | Version Bool
   deriving (Eq, Show)
 
@@ -34,5 +35,10 @@ optDescrs =
       []
       ["port"]
       (GetOpt.ReqArg Port "NUMBER")
-      "Sets the port to listen on."
+      "Sets the port to listen on.",
+    GetOpt.Option
+      []
+      ["sentry-dsn"]
+      (GetOpt.ReqArg SentryDsn "URL")
+      "Sets the Sentry DSN for exception reporting."
   ]
