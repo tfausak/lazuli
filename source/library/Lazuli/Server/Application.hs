@@ -20,6 +20,7 @@ application request respond =
         Lucid.html_ [Lucid.lang_ "en-US"] $ do
           Lucid.head_ $ do
             Lucid.meta_ [Lucid.charset_ "utf-8"]
+            Lucid.meta_ [Lucid.name_ "viewport", Lucid.content_ "initial-scale=1, width=device-width"]
             Lucid.title_ "Lazuli"
           Lucid.body_ $ do
             Lucid.h1_ "Lazuli"
