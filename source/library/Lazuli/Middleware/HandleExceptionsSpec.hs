@@ -21,6 +21,7 @@ spec = Hspec.describe "Lazuli.Middleware.HandleExceptions" $ do
             (const $ pure ())
             (error "unused")
             (error "unused")
+            (error "unused")
             context
             application
       Wai.Test.simpleStatus response `Hspec.shouldBe` Http.internalServerError500
