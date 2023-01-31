@@ -5,7 +5,6 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Bifunctor as Bifunctor
 import qualified Data.Map as Map
 import qualified Data.Maybe as Maybe
-import qualified Data.Text as Text
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Context as Context
 import qualified Network.HTTP.Client as Client
@@ -18,6 +17,7 @@ import qualified Patrol.Type.Request
 import qualified Patrol.Type.Response
 import qualified System.Environment as Environment
 import qualified System.IO as IO
+import qualified Witch
 
 run :: (Catch.Exception e) => Context.Context -> e -> IO ()
 run = runWith (IO.hPutStrLn IO.stderr) Patrol.Type.Event.new Environment.getEnvironment Patrol.Client.store
@@ -40,7 +40,7 @@ runWith myPutStrLn newEvent getEnvironment store context exception = do
       environment <- getEnvironment
       let patrolException = Patrol.Type.Exception.fromSomeException $ Catch.toException exception
           patrolExceptions = Patrol.Type.Exceptions.empty {Patrol.Type.Exceptions.values = [patrolException]}
-          patrolRequest = Patrol.Type.Request.empty {Patrol.Type.Request.env = Map.fromList $ fmap (Bifunctor.bimap Text.pack Aeson.toJSON) environment}
+          patrolRequest = Patrol.Type.Request.empty {Patrol.Type.Request.env = Map.fromList $ fmap (Bifunctor.bimap Witch.from Aeson.toJSON) environment}
       response <-
         store
           (Context.manager context)

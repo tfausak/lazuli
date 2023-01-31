@@ -1,7 +1,7 @@
 module Lazuli.Middleware.AddRequestId where
 
+import qualified Data.ByteString as ByteString
 import qualified Data.Text as Text
-import qualified Data.Text.Encoding as Text
 import qualified Data.Vault.Lazy as Vault
 import qualified Lazuli.Constant.Header as Header
 import qualified Lazuli.Extra.List as List
@@ -22,6 +22,12 @@ middlewareWith ::
 middlewareWith generate key handle request respond = do
   requestId <- generate
   let vault = Vault.insert key requestId $ Wai.vault request
-      header = (Header.lazuliRequestId, Text.encodeUtf8 . Text.pack $ Witch.into @String requestId)
+      header =
+        ( Header.lazuliRequestId,
+          Witch.into @ByteString.ByteString
+            . Witch.into @(Witch.UTF_8 ByteString.ByteString)
+            . Witch.into @Text.Text
+            $ Witch.into @String requestId
+        )
   handle request {Wai.vault = vault} $ \response -> do
     respond $ Wai.mapResponseHeaders (List.appendIfMissing header) response
