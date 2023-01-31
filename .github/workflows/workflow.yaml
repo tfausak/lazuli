@@ -84,6 +84,9 @@
           }
         },
         {
+          "run": "echo '::add-matcher::.github/hspec-problem-matcher.json'"
+        }
+        {
           "run": "cabal run -- lazuli-test-suite --randomize --strict"
         }
       ],

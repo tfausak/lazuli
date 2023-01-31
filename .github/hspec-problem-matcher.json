@@ -1,0 +1,19 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "hspec",
+      "pattern": [
+        {
+          "column": 3,
+          "file": 1,
+          "line": 2,
+          "regexp": "^[^ ]* *(.+?):(\\d+):(\\d+): "
+        },
+        {
+          "message": 1,
+          "regexp": "^  \\d+\\) (.+)"
+        }
+      ]
+    }
+  ]
+}
