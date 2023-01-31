@@ -28,26 +28,30 @@ application context request respond =
             Lucid.title_ "Lazuli"
           Lucid.body_ $ do
             Lucid.h1_ "Lazuli"
-    ("GET", ["api", "health-check"]) -> respond $ statusResponse Http.ok200
+    ("GET", ["api", "health-check"]) -> respond $ statusResponse Http.ok200 [(Http.hCacheControl, "no-cache")]
     ("POST", ["api", "throw"]) -> Catch.throwM TestError.TestError
     ("GET", ["favicon.ico"]) ->
       respond $
         Wai.responseFile
           Http.ok200
-          [(Http.hContentType, Mime.imageIcon)]
+          [ (Http.hCacheControl, "max-age=86400, stale-while-revalidate=3600"),
+            (Http.hContentType, Mime.imageIcon)
+          ]
           (FilePath.combine (Config.dataDirectory $ Context.config context) "favicon.ico")
           Nothing
     ("GET", ["robots.txt"]) ->
       respond $
         Wai.responseLBS
           Http.ok200
-          [(Http.hContentType, Mime.textPlain)]
+          [ (Http.hCacheControl, "max-age=86400, stale-while-revalidate=3600"),
+            (Http.hContentType, Mime.textPlain)
+          ]
           "User-agent: *\nAllow: /\n"
-    _ -> respond $ statusResponse Http.notFound404
+    _ -> respond $ statusResponse Http.notFound404 []
 
-statusResponse :: Http.Status -> Wai.Response
-statusResponse status =
-  Wai.responseLBS status [(Http.hContentType, Mime.textPlain)]
+statusResponse :: Http.Status -> Http.ResponseHeaders -> Wai.Response
+statusResponse status headers =
+  Wai.responseLBS status ((Http.hContentType, Mime.textPlain) : headers)
     . Witch.from
     . (<> "\n")
     $ Http.statusMessage status

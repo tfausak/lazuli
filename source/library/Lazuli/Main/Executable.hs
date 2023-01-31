@@ -50,6 +50,6 @@ settings context =
         & Warp.setBeforeMainLoop (putStrLn $ "Listening on " <> show port <> " ...")
         & Warp.setGracefulShutdownTimeout (Just 30)
         & Warp.setOnException (const $ Exception.Handle.run context)
-        & Warp.setOnExceptionResponse (const $ Application.statusResponse Http.internalServerError500)
+        & Warp.setOnExceptionResponse (const $ Application.statusResponse Http.internalServerError500 [])
         & Warp.setPort (Witch.into @Warp.Port port)
         & Warp.setServerName ByteString.empty
