@@ -11,6 +11,7 @@ import qualified Witch
 
 data Config = Config
   { commit :: Maybe Text.Text,
+    dataDirectory :: FilePath,
     environment :: Environment.Environment,
     help :: Bool,
     port :: Port.Port,
@@ -23,6 +24,7 @@ development :: Config
 development =
   Config
     { commit = Nothing,
+      dataDirectory = "data",
       environment = Environment.Development,
       help = False,
       port = Port.Port 3000,
@@ -36,6 +38,7 @@ testing = development {environment = Environment.Testing}
 applyFlag :: (Catch.MonadThrow m) => Config -> Flag.Flag -> m Config
 applyFlag config flag = case flag of
   Flag.Commit s -> pure config {commit = Just $ Witch.from s}
+  Flag.DataDirectory s -> pure config {dataDirectory = s}
   Flag.Environment s -> case Witch.tryFrom s of
     Left e -> Catch.throwM e
     Right e -> pure config {environment = e}

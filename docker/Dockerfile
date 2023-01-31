@@ -13,6 +13,9 @@ WORKDIR "/home/$USER_NAME"
 ARG LAZULI_COMMIT
 ENV LAZULI_COMMIT="$LAZULI_COMMIT"
 
+COPY data data
+ENV LAZULI_DATA_DIRECTORY=/home/lazuli/data
+
 COPY lazuli /usr/local/bin
 
 CMD lazuli

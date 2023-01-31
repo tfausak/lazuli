@@ -39,8 +39,9 @@ executable = do
   handler <- Conc.getUncaughtExceptionHandler
   Conc.setUncaughtExceptionHandler $ Catch.handle handler . Exception.Handle.run context
 
-  Warp.runSettings (settings context) $
-    Middleware.middleware context Application.application
+  Warp.runSettings (settings context)
+    . Middleware.middleware context
+    $ Application.application context
 
 settings :: Context.Context -> Warp.Settings
 settings context =

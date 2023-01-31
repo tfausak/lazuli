@@ -4,6 +4,7 @@ import qualified System.Console.GetOpt as GetOpt
 
 data Flag
   = Commit String
+  | DataDirectory FilePath
   | Environment String
   | Help Bool
   | Port String
@@ -38,6 +39,11 @@ optDescrs =
       ["commit"]
       (GetOpt.ReqArg Commit "HASH")
       "Sets the commit hash for diagnostics. No default.",
+    GetOpt.Option
+      []
+      ["data-directory"]
+      (GetOpt.ReqArg DataDirectory "PATH")
+      "Sets the directory to find data files in. Defaults to data.",
     GetOpt.Option
       []
       ["environment"]

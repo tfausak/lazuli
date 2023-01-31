@@ -156,7 +156,11 @@
           }
         },
         {
-          "run": "cp artifact/ubuntu/lazuli docker"
+          "run": "tar xf lazuli-*.tar.gz",
+          "working-directory": "./artifact/ubuntu"
+        },
+        {
+          "run": "mv artifact/ubuntu/lazuli-*/data artifact/ubuntu/lazuli docker"
         },
         {
           "run": "chmod +x docker/lazuli"

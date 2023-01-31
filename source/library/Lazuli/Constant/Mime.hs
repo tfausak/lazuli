@@ -2,6 +2,9 @@ module Lazuli.Constant.Mime where
 
 import qualified Data.ByteString as ByteString
 
+imageIcon :: ByteString.ByteString
+imageIcon = "image/x-icon"
+
 textHtml :: ByteString.ByteString
 textHtml = "text/html;charset=utf-8"
 

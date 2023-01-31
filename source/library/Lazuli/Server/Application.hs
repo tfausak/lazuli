@@ -3,13 +3,16 @@ module Lazuli.Server.Application where
 import qualified Control.Monad.Catch as Catch
 import qualified Lazuli.Constant.Mime as Mime
 import qualified Lazuli.Exception.TestError as TestError
+import qualified Lazuli.Type.Config as Config
+import qualified Lazuli.Type.Context as Context
 import qualified Lucid
 import qualified Network.HTTP.Types as Http
 import qualified Network.Wai as Wai
+import qualified System.FilePath as FilePath
 import qualified Witch
 
-application :: Wai.Application
-application request respond =
+application :: Context.Context -> Wai.Application
+application context request respond =
   case (Wai.requestMethod request, Wai.pathInfo request) of
     ("GET", []) -> respond
       . Wai.responseLBS
@@ -27,6 +30,13 @@ application request respond =
             Lucid.h1_ "Lazuli"
     ("GET", ["api", "health-check"]) -> respond $ statusResponse Http.ok200
     ("POST", ["api", "throw"]) -> Catch.throwM TestError.TestError
+    ("GET", ["favicon.ico"]) ->
+      respond $
+        Wai.responseFile
+          Http.ok200
+          [(Http.hContentType, Mime.imageIcon)]
+          (FilePath.combine (Config.dataDirectory $ Context.config context) "favicon.ico")
+          Nothing
     ("GET", ["robots.txt"]) ->
       respond $
         Wai.responseLBS
