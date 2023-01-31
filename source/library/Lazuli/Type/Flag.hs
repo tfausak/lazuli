@@ -3,7 +3,8 @@ module Lazuli.Type.Flag where
 import qualified System.Console.GetOpt as GetOpt
 
 data Flag
-  = Help Bool
+  = Commit String
+  | Help Bool
   | Port String
   | SentryDsn String
   | Version Bool
@@ -31,6 +32,11 @@ optDescrs =
       ["no-version"]
       (GetOpt.NoArg $ Version False)
       "",
+    GetOpt.Option
+      []
+      ["commit"]
+      (GetOpt.ReqArg Commit "HASH")
+      "Sets the commit hash for diagnostics.",
     GetOpt.Option
       []
       ["port"]

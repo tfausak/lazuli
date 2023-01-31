@@ -119,6 +119,27 @@
         }
       ]
     },
+    "deploy": {
+      "if": "github.event_name != 'schedule' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)",
+      "name": "Deploy",
+      "needs": "docker",
+      "runs-on": "ubuntu-22.04",
+      "steps": [
+        {
+          "uses": "actions/checkout@v3"
+        },
+        {
+          "uses": "superfly/flyctl-actions/setup-flyctl@67ddda2a87628f1aff28a54b8a708879ec62c80f"
+        },
+        {
+          "env": {
+            "FLY_API_TOKEN": "${{ secrets.FLY_API_TOKEN }}",
+            "FLY_APP": "${{ secrets.FLY_APP }}"
+          },
+          "run": "flyctl deploy --image ghcr.io/${{ github.repository }}:sha-${{ github.sha }}"
+        }
+      ]
+    },
     "docker": {
       "name": "Docker",
       "needs": "build",
@@ -160,31 +181,11 @@
         {
           "uses": "docker/build-push-action@v4",
           "with": {
+            "build-args": "LAZULI_COMMIT=${{ github.sha }}",
             "context": "docker",
             "push": "${{ github.event_name != 'schedule' }}",
             "tags": "${{ steps.meta.outputs.tags }}"
           }
-        }
-      ]
-    },
-    "deploy": {
-      "if": "github.event_name != 'schedule' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)",
-      "name": "Deploy",
-      "needs": "docker",
-      "runs-on": "ubuntu-22.04",
-      "steps": [
-        {
-          "uses": "actions/checkout@v3"
-        },
-        {
-          "uses": "superfly/flyctl-actions/setup-flyctl@67ddda2a87628f1aff28a54b8a708879ec62c80f"
-        },
-        {
-          "env": {
-            "FLY_API_TOKEN": "${{ secrets.FLY_API_TOKEN }}",
-            "FLY_APP": "${{ secrets.FLY_APP }}"
-          },
-          "run": "flyctl deploy --image ghcr.io/${{ github.repository }}:sha-${{ github.sha }}"
         }
       ]
     },

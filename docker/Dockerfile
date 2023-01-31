@@ -10,6 +10,9 @@ RUN useradd --create-home "$USER_NAME"
 USER "$USER_NAME"
 WORKDIR "/home/$USER_NAME"
 
+ARG LAZULI_COMMIT
+ENV LAZULI_COMMIT="$LAZULI_COMMIT"
+
 COPY lazuli /usr/local/bin
 
 CMD lazuli

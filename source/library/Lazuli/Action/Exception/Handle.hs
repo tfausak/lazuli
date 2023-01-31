@@ -4,6 +4,7 @@ import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Bifunctor as Bifunctor
 import qualified Data.Map as Map
+import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Context as Context
@@ -46,6 +47,7 @@ runWith myPutStrLn newEvent getEnvironment store context exception = do
           sentryDsn
           event
             { Patrol.Type.Event.exception = Just patrolExceptions,
+              Patrol.Type.Event.release = Maybe.fromMaybe "" . Config.commit $ Context.config context,
               Patrol.Type.Event.request = Just patrolRequest
             }
       myPutStrLn . show $ Patrol.Type.Response.id response
