@@ -27,7 +27,19 @@ executable = do
 
   Monad.when (Config.help config) $ do
     name <- Environment.getProgName
-    putStr $ GetOpt.usageInfo (name <> " version " <> Version.string) Flag.optDescrs
+    let header =
+          unlines
+            [ name <> " version " <> Version.string,
+              "https://github.com/tfausak/lazuli",
+              "",
+              "All flags can also be set with environment variables. For \
+              \example, the '--data-directory=PATH' flag can be set with the \
+              \'LAZULI_DATA_DIRECTORY=PATH' environment variable. If both an \
+              \environment variable and a flag are set, the flag takes \
+              \precedence. Flags are processed in order, and later flags \
+              \override earlier flags."
+            ]
+    putStr $ GetOpt.usageInfo header Flag.optDescrs
     Exit.exitSuccess
 
   Monad.when (Config.version config) $ do
