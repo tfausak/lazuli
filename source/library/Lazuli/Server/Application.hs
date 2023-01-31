@@ -1,7 +1,9 @@
 module Lazuli.Server.Application where
 
 import qualified Control.Monad.Catch as Catch
+import qualified Data.Text as Text
 import qualified Lazuli.Constant.Mime as Mime
+import qualified Lazuli.Constant.Version as Version
 import qualified Lazuli.Exception.TestError as TestError
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Context as Context
@@ -28,12 +30,28 @@ application context request respond =
             Lucid.title_ "Lazuli"
             Lucid.link_ [Lucid.rel_ "stylesheet", Lucid.href_ "/static/bootstrap.css"]
           Lucid.body_ $ do
-            Lucid.nav_ [Lucid.class_ "navbar text-bg-primary"] $ do
+            Lucid.header_ $ do
+              Lucid.nav_ [Lucid.class_ "bg-body-secondary navbar"] $ do
+                Lucid.div_ [Lucid.class_ "container"] $ do
+                  Lucid.a_ [Lucid.class_ "navbar-brand", Lucid.href_ "/"] "Lazuli"
+            Lucid.main_ [Lucid.class_ "my-3"] $ do
               Lucid.div_ [Lucid.class_ "container"] $ do
-                Lucid.a_ [Lucid.class_ "navbar-brand text-bg-primary", Lucid.href_ "/"] "Lazuli"
-            Lucid.div_ [Lucid.class_ "container"] $ do
-              Lucid.p_ $ do
-                Lucid.a_ [Lucid.href_ "https://github.com/tfausak/lazuli"] "github.com/tfausak/lazuli"
+                Lucid.p_ $ do
+                  "\x1f48e"
+            Lucid.footer_ [Lucid.class_ "text-secondary"] $ do
+              Lucid.div_ [Lucid.class_ "border-top container py-3"] $ do
+                Lucid.p_ $ do
+                  "Powered by "
+                  Lucid.a_ [Lucid.href_ "https://github.com/tfausak/lazuli"] "Lazuli"
+                  " version "
+                  Lucid.toHtml Version.string
+                  case Config.commit $ Context.config context of
+                    Nothing -> pure ()
+                    Just commit -> do
+                      " commit "
+                      Lucid.a_ [Lucid.href_ $ "https://github.com/tfausak/lazuli/commit/" <> commit] $ do
+                        Lucid.toHtml $ Text.take 7 commit
+                  "."
     ("GET", ["api", "health-check"]) -> respond $ statusResponse Http.ok200 [(Http.hCacheControl, "no-cache")]
     ("POST", ["api", "throw"]) -> Catch.throwM TestError.TestError
     ("GET", ["favicon.ico"]) ->
