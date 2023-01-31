@@ -79,6 +79,7 @@ library
     Lazuli.Exception.TestError
     Lazuli.Exception.UnexpectedArgument
     Lazuli.Exception.UnknownOption
+    Lazuli.Extra.Either
     Lazuli.Extra.GetOpt
     Lazuli.Extra.Hspec
     Lazuli.Extra.List
@@ -93,6 +94,7 @@ library
     Lazuli.Server.Middleware
     Lazuli.Type.Config
     Lazuli.Type.Context
+    Lazuli.Type.Environment
     Lazuli.Type.Flag
     Lazuli.Type.Port
     Lazuli.Type.RequestId
@@ -103,6 +105,7 @@ library
     Lazuli.Action.Config.LoadSpec
     Lazuli.Action.Context.LoadSpec
     Lazuli.Action.Exception.HandleSpec
+    Lazuli.Extra.EitherSpec
     Lazuli.Extra.GetOptSpec
     Lazuli.Extra.HspecSpec
     Lazuli.Extra.ListSpec
@@ -111,6 +114,7 @@ library
     Lazuli.Middleware.HandleExceptionsSpec
     Lazuli.Middleware.LogResponsesSpec
     Lazuli.Type.ConfigSpec
+    Lazuli.Type.EnvironmentSpec
     Lazuli.Type.PortSpec
     Lazuli.Type.RequestIdSpec
     Lazuli.Type.UrlSpec

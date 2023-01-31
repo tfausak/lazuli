@@ -4,6 +4,7 @@ import qualified System.Console.GetOpt as GetOpt
 
 data Flag
   = Commit String
+  | Environment String
   | Help Bool
   | Port String
   | SentryDsn String
@@ -36,15 +37,20 @@ optDescrs =
       []
       ["commit"]
       (GetOpt.ReqArg Commit "HASH")
-      "Sets the commit hash for diagnostics.",
+      "Sets the commit hash for diagnostics. No default.",
+    GetOpt.Option
+      []
+      ["environment"]
+      (GetOpt.ReqArg Environment "NAME")
+      "Sets the environment to run in. Defaults to development.",
     GetOpt.Option
       []
       ["port"]
       (GetOpt.ReqArg Port "NUMBER")
-      "Sets the port to listen on.",
+      "Sets the port to listen on. Defaults to 3000.",
     GetOpt.Option
       []
       ["sentry-dsn"]
       (GetOpt.ReqArg SentryDsn "URL")
-      "Sets the Sentry DSN for exception reporting."
+      "Sets the Sentry DSN for exception reporting. No default."
   ]

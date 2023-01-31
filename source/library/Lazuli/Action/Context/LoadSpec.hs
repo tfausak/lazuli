@@ -9,6 +9,6 @@ spec :: Hspec.Spec
 spec = Hspec.describe "Lazuli.Action.Context.Load" $ do
   Hspec.describe "runWith" $ do
     Hspec.it "sets the config" $ do
-      let config = Config.initial
+      let config = Config.testing
       context <- Context.Load.run config
       Context.config context `Hspec.shouldBe` config

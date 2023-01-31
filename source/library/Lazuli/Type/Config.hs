@@ -2,6 +2,7 @@ module Lazuli.Type.Config where
 
 import qualified Control.Monad.Catch as Catch
 import qualified Data.Text as Text
+import qualified Lazuli.Type.Environment as Environment
 import qualified Lazuli.Type.Flag as Flag
 import qualified Lazuli.Type.Port as Port
 import qualified Lazuli.Type.Url as Url
@@ -10,6 +11,7 @@ import qualified Witch
 
 data Config = Config
   { commit :: Maybe Text.Text,
+    environment :: Environment.Environment,
     help :: Bool,
     port :: Port.Port,
     sentryDsn :: Maybe Patrol.Dsn,
@@ -17,19 +19,26 @@ data Config = Config
   }
   deriving (Eq, Show)
 
-initial :: Config
-initial =
+development :: Config
+development =
   Config
     { commit = Nothing,
+      environment = Environment.Development,
       help = False,
       port = Port.Port 3000,
       sentryDsn = Nothing,
       version = False
     }
 
+testing :: Config
+testing = development {environment = Environment.Testing}
+
 applyFlag :: (Catch.MonadThrow m) => Config -> Flag.Flag -> m Config
 applyFlag config flag = case flag of
   Flag.Commit s -> pure config {commit = Just $ Witch.from s}
+  Flag.Environment s -> case Witch.tryFrom s of
+    Left e -> Catch.throwM e
+    Right e -> pure config {environment = e}
   Flag.Help h -> pure config {help = h}
   Flag.Port s -> case Witch.tryFrom s of
     Left e -> Catch.throwM e

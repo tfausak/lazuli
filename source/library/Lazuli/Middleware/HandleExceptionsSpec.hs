@@ -14,7 +14,7 @@ spec :: Hspec.Spec
 spec = Hspec.describe "Lazuli.Middleware.HandleExceptions" $ do
   Hspec.describe "middleware" $ do
     Hspec.it "returns a 500" $ do
-      context <- Context.Load.run Config.initial
+      context <- Context.Load.run Config.testing
       response <-
         Wai.Test.runSession (Wai.Test.request Wai.Test.defaultRequest) $
           HandleExceptions.middlewareWith

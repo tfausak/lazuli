@@ -1,3 +1,6 @@
+[env]
+  LAZULI_ENVIRONMENT = "production"
+
 [[services]]
   internal_port = 3000
   protocol = "tcp"

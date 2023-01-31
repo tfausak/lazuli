@@ -23,4 +23,4 @@ runWith lookupEnv arguments = do
       modify = mappend "LAZULI_" . fmap (\c -> if c == '-' then '_' else Char.toUpper c)
   environmentFlags <- GetOpt.fromEnvironment Flag.optDescrs modify lookupEnv
   argumentFlags <- GetOpt.fromArguments Flag.optDescrs arguments
-  Monad.foldM Config.applyFlag Config.initial $ environmentFlags <> argumentFlags
+  Monad.foldM Config.applyFlag Config.development $ environmentFlags <> argumentFlags

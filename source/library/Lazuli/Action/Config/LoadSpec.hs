@@ -8,13 +8,13 @@ spec :: Hspec.Spec
 spec = Hspec.describe "Lazuli.Action.Config.Load" $ do
   Hspec.describe "runWith" $ do
     Hspec.it "works with no flags" $ do
-      Config.Load.runWith (pure . flip lookup []) [] `Hspec.shouldReturn` Config.initial
+      Config.Load.runWith (pure . flip lookup []) [] `Hspec.shouldReturn` Config.development
 
     Hspec.it "works with an environment variable" $ do
-      Config.Load.runWith (pure . flip lookup [("LAZULI_HELP", "x")]) [] `Hspec.shouldReturn` Config.initial {Config.help = True}
+      Config.Load.runWith (pure . flip lookup [("LAZULI_HELP", "x")]) [] `Hspec.shouldReturn` Config.development {Config.help = True}
 
     Hspec.it "works with a command line argument" $ do
-      Config.Load.runWith (pure . flip lookup []) ["--help"] `Hspec.shouldReturn` Config.initial {Config.help = True}
+      Config.Load.runWith (pure . flip lookup []) ["--help"] `Hspec.shouldReturn` Config.development {Config.help = True}
 
     Hspec.it "prefers arguments over environment" $ do
-      Config.Load.runWith (pure . flip lookup [("LAZULI_HELP", "x")]) ["--no-help"] `Hspec.shouldReturn` Config.initial
+      Config.Load.runWith (pure . flip lookup [("LAZULI_HELP", "x")]) ["--no-help"] `Hspec.shouldReturn` Config.development
