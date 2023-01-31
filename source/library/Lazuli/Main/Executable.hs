@@ -45,10 +45,12 @@ executable = do
 
 settings :: Context.Context -> Warp.Settings
 settings context =
-  let port = Config.port $ Context.config context
+  let host = Config.host $ Context.config context
+      port = Config.port $ Context.config context
    in Warp.defaultSettings
-        & Warp.setBeforeMainLoop (putStrLn $ "Listening on " <> show port <> " ...")
+        & Warp.setBeforeMainLoop (putStrLn $ "Listening on " <> show host <> " " <> show port <> " ...")
         & Warp.setGracefulShutdownTimeout (Just 30)
+        & Warp.setHost host
         & Warp.setOnException (const $ Exception.Handle.run context)
         & Warp.setOnExceptionResponse (const $ Application.statusResponse Http.internalServerError500 [])
         & Warp.setPort (Witch.into @Warp.Port port)

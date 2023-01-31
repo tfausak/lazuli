@@ -1,5 +1,6 @@
 [env]
   LAZULI_ENVIRONMENT = "production"
+  LAZULI_HOST = "*"
 
 [[services]]
   internal_port = 3000

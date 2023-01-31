@@ -34,6 +34,9 @@ spec = Hspec.describe "Lazuli.Type.Config" $ do
     Hspec.it "rejects an invalid environment" $ do
       Config.applyFlag config (Flag.Environment "invalid") `Hspec.shouldThrow` Hspec.exceptionType @(Witch.TryFromException String Environment.Environment)
 
+    Hspec.it "handles the host flag" $ do
+      Config.applyFlag config (Flag.Host "*") `Hspec.shouldReturn` config {Config.host = "*"}
+
     Hspec.it "sets a valid port" $ do
       Config.applyFlag config (Flag.Port "1234") `Hspec.shouldReturn` config {Config.port = Port.Port 1234}
 

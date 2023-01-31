@@ -7,6 +7,7 @@ data Flag
   | DataDirectory FilePath
   | Environment String
   | Help Bool
+  | Host String
   | Port String
   | SentryDsn String
   | Version Bool
@@ -49,6 +50,11 @@ optDescrs =
       ["environment"]
       (GetOpt.ReqArg Environment "NAME")
       "Sets the environment to run in. Defaults to development.",
+    GetOpt.Option
+      []
+      ["host"]
+      (GetOpt.ReqArg Host "PREFERENCE")
+      "Sets the host to listen on. Defaults to 127.0.0.1.",
     GetOpt.Option
       []
       ["port"]
