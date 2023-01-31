@@ -26,7 +26,7 @@ spec = Hspec.describe "Lazuli.Type.Config" $ do
       Config.applyFlag config (Flag.Commit "01ef") `Hspec.shouldReturn` config {Config.commit = Just "01ef"}
 
     Hspec.it "handles the data directory flag" $ do
-      Config.applyFlag config (Flag.DataDirectory "datum") `Hspec.shouldReturn` config {Config.commit = Just "datum"}
+      Config.applyFlag config (Flag.DataDirectory "datum") `Hspec.shouldReturn` config {Config.dataDirectory = "datum"}
 
     Hspec.it "sets a valid environment" $ do
       Config.applyFlag config (Flag.Environment "testing") `Hspec.shouldReturn` config {Config.environment = Environment.Testing}
