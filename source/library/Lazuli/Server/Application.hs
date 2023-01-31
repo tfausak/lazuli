@@ -26,8 +26,14 @@ application context request respond =
             Lucid.meta_ [Lucid.charset_ "utf-8"]
             Lucid.meta_ [Lucid.name_ "viewport", Lucid.content_ "initial-scale=1, width=device-width"]
             Lucid.title_ "Lazuli"
+            Lucid.link_ [Lucid.rel_ "stylesheet", Lucid.href_ "/static/bootstrap.css"]
           Lucid.body_ $ do
-            Lucid.h1_ "Lazuli"
+            Lucid.nav_ [Lucid.class_ "navbar text-bg-primary"] $ do
+              Lucid.div_ [Lucid.class_ "container"] $ do
+                Lucid.a_ [Lucid.class_ "navbar-brand text-bg-primary", Lucid.href_ "/"] "Lazuli"
+            Lucid.div_ [Lucid.class_ "container"] $ do
+              Lucid.p_ $ do
+                Lucid.a_ [Lucid.href_ "https://github.com/tfausak/lazuli"] "github.com/tfausak/lazuli"
     ("GET", ["api", "health-check"]) -> respond $ statusResponse Http.ok200 [(Http.hCacheControl, "no-cache")]
     ("POST", ["api", "throw"]) -> Catch.throwM TestError.TestError
     ("GET", ["favicon.ico"]) ->
@@ -47,6 +53,15 @@ application context request respond =
             (Http.hContentType, Mime.textPlain)
           ]
           "User-agent: *\nAllow: /\n"
+    ("GET", ["static", "bootstrap.css"]) ->
+      respond $
+        Wai.responseFile
+          Http.ok200
+          [ (Http.hCacheControl, "max-age=86400, stale-while-revalidate=3600"),
+            (Http.hContentType, Mime.textCss)
+          ]
+          (FilePath.combine (Config.dataDirectory $ Context.config context) "bootstrap.css")
+          Nothing
     _ -> respond $ statusResponse Http.notFound404 []
 
 statusResponse :: Http.Status -> Http.ResponseHeaders -> Wai.Response
