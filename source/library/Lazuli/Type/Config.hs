@@ -5,6 +5,7 @@ import qualified Data.String as String
 import qualified Data.Text as Text
 import qualified Lazuli.Type.Environment as Environment
 import qualified Lazuli.Type.Flag as Flag
+import qualified Lazuli.Type.LogLevel as LogLevel
 import qualified Lazuli.Type.Port as Port
 import qualified Lazuli.Type.Url as Url
 import qualified Network.Wai.Handler.Warp as Warp
@@ -18,6 +19,7 @@ data Config = Config
     environment :: Environment.Environment,
     help :: Bool,
     host :: Warp.HostPreference,
+    logLevel :: LogLevel.LogLevel,
     port :: Port.Port,
     sentryDsn :: Maybe Patrol.Dsn,
     version :: Bool
@@ -33,6 +35,7 @@ development =
       environment = Environment.Development,
       help = False,
       host = "127.0.0.1",
+      logLevel = LogLevel.Debug,
       port = Port.Port 3000,
       sentryDsn = Nothing,
       version = False
@@ -56,6 +59,9 @@ applyFlag config flag = case flag of
     Right e -> pure config {environment = e}
   Flag.Help h -> pure config {help = h}
   Flag.Host s -> pure config {host = String.fromString s}
+  Flag.LogLevel s -> case Witch.tryFrom s of
+    Left e -> Catch.throwM e
+    Right l -> pure config {logLevel = l}
   Flag.Port s -> case Witch.tryFrom s of
     Left e -> Catch.throwM e
     Right p -> pure config {port = p}

@@ -59,6 +59,7 @@ library
     , patrol ^>=1.0.0
     , random ^>=1.2.1
     , text ^>=2.0.1
+    , time ^>=1.12.2
     , vault ^>=0.3.1
     , wai ^>=3.2.3
     , wai-extra ^>=3.1.13
@@ -90,6 +91,7 @@ library
     Lazuli.Extra.Hspec
     Lazuli.Extra.List
     Lazuli.Extra.Wai
+    Lazuli.Log
     Lazuli.Main.Executable
     Lazuli.Main.TestSuite
     Lazuli.Middleware.AddRequestId
@@ -102,6 +104,7 @@ library
     Lazuli.Type.Context
     Lazuli.Type.Environment
     Lazuli.Type.Flag
+    Lazuli.Type.LogLevel
     Lazuli.Type.Port
     Lazuli.Type.RequestId
     Lazuli.Type.Url
@@ -121,6 +124,7 @@ library
     Lazuli.Middleware.LogResponsesSpec
     Lazuli.Type.ConfigSpec
     Lazuli.Type.EnvironmentSpec
+    Lazuli.Type.LogLevelSpec
     Lazuli.Type.PortSpec
     Lazuli.Type.RequestIdSpec
     Lazuli.Type.UrlSpec

@@ -10,6 +10,6 @@ import qualified Network.Wai as Wai
 middleware :: Context.Context -> Wai.Middleware
 middleware context =
   AddRequestId.middleware (Context.requestIdKey context)
-    . LogResponses.middleware (Context.requestIdKey context)
+    . LogResponses.middleware context
     . AddSecurityHeaders.middleware
     . HandleExceptions.middleware context

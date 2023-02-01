@@ -9,6 +9,7 @@ data Flag
   | Environment String
   | Help Bool
   | Host String
+  | LogLevel String
   | Port String
   | SentryDsn String
   | Version Bool
@@ -64,6 +65,12 @@ optDescrs =
       (GetOpt.ReqArg Host "PREFERENCE")
       "Sets the host to listen on. Defaults to '127.0.0.1'. Can use the \
       \special value '*' to listen on all hosts.",
+    GetOpt.Option
+      []
+      ["log-level"]
+      (GetOpt.ReqArg LogLevel "LEVEL")
+      "Sets the log level. Defaults to 'debug'. Must be one of 'debug', \
+      \'info', 'warn', or 'error'.",
     GetOpt.Option
       []
       ["port"]

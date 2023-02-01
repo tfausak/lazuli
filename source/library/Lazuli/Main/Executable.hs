@@ -9,6 +9,7 @@ import qualified Lazuli.Action.Config.Load as Config.Load
 import qualified Lazuli.Action.Context.Load as Context.Load
 import qualified Lazuli.Action.Exception.Handle as Exception.Handle
 import qualified Lazuli.Constant.Version as Version
+import qualified Lazuli.Log as Log
 import qualified Lazuli.Server.Application as Application
 import qualified Lazuli.Server.Middleware as Middleware
 import qualified Lazuli.Type.Config as Config
@@ -60,7 +61,7 @@ settings context =
   let host = Config.host $ Context.config context
       port = Config.port $ Context.config context
    in Warp.defaultSettings
-        & Warp.setBeforeMainLoop (putStrLn $ "Listening on " <> show host <> " " <> show port <> " ...")
+        & Warp.setBeforeMainLoop (Log.info context $ "Listening on " <> show host <> " " <> show port <> " ...")
         & Warp.setGracefulShutdownTimeout (Just 30)
         & Warp.setHost host
         & Warp.setOnException (const $ Exception.Handle.run context)

@@ -13,6 +13,7 @@ import qualified Lazuli.Middleware.HandleExceptionsSpec
 import qualified Lazuli.Middleware.LogResponsesSpec
 import qualified Lazuli.Type.ConfigSpec
 import qualified Lazuli.Type.EnvironmentSpec
+import qualified Lazuli.Type.LogLevelSpec
 import qualified Lazuli.Type.PortSpec
 import qualified Lazuli.Type.RequestIdSpec
 import qualified Lazuli.Type.UrlSpec
@@ -33,6 +34,7 @@ spec = do
   Lazuli.Middleware.LogResponsesSpec.spec
   Lazuli.Type.ConfigSpec.spec
   Lazuli.Type.EnvironmentSpec.spec
+  Lazuli.Type.LogLevelSpec.spec
   Lazuli.Type.PortSpec.spec
   Lazuli.Type.RequestIdSpec.spec
   Lazuli.Type.UrlSpec.spec

@@ -5,6 +5,7 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Bifunctor as Bifunctor
 import qualified Data.Map as Map
 import qualified Data.Maybe as Maybe
+import qualified Lazuli.Log as Log
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Context as Context
 import qualified Network.HTTP.Client as Client
@@ -16,11 +17,10 @@ import qualified Patrol.Type.Exceptions
 import qualified Patrol.Type.Request
 import qualified Patrol.Type.Response
 import qualified System.Environment as Environment
-import qualified System.IO as IO
 import qualified Witch
 
 run :: (Catch.Exception e) => Context.Context -> e -> IO ()
-run = runWith (IO.hPutStrLn IO.stderr) Patrol.Type.Event.new Environment.getEnvironment Patrol.Client.store
+run context = runWith (Log.error context) Patrol.Type.Event.new Environment.getEnvironment Patrol.Client.store context
 
 runWith ::
   (Monad m, Catch.Exception e) =>

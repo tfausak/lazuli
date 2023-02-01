@@ -5,6 +5,7 @@ import qualified Lazuli.Extra.Hspec as Hspec
 import qualified Lazuli.Type.Config as Config
 import qualified Lazuli.Type.Environment as Environment
 import qualified Lazuli.Type.Flag as Flag
+import qualified Lazuli.Type.LogLevel as LogLevel
 import qualified Lazuli.Type.Port as Port
 import qualified Lazuli.Type.Url as Url
 import qualified Patrol
@@ -42,6 +43,12 @@ spec = Hspec.describe "Lazuli.Type.Config" $ do
 
     Hspec.it "handles the host flag" $ do
       Config.applyFlag config (Flag.Host "*") `Hspec.shouldReturn` config {Config.host = "*"}
+
+    Hspec.it "sets a valid log level" $ do
+      Config.applyFlag config (Flag.LogLevel "info") `Hspec.shouldReturn` config {Config.logLevel = LogLevel.Info}
+
+    Hspec.it "rejects an invalid log level" $ do
+      Config.applyFlag config (Flag.LogLevel "invalid") `Hspec.shouldThrow` Hspec.exceptionType @(Witch.TryFromException String LogLevel.LogLevel)
 
     Hspec.it "sets a valid port" $ do
       Config.applyFlag config (Flag.Port "1234") `Hspec.shouldReturn` config {Config.port = Port.Port 1234}

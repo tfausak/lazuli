@@ -5,14 +5,16 @@ import qualified Data.Text.Encoding as Text
 import qualified Data.Vault.Lazy as Vault
 import qualified GHC.Clock as Clock
 import qualified Lazuli.Extra.Wai as Wai
+import qualified Lazuli.Log as Log
+import qualified Lazuli.Type.Context as Context
 import qualified Lazuli.Type.RequestId as RequestId
 import qualified Network.HTTP.Types as Http
 import qualified Network.Wai as Wai
 import qualified Text.Printf as Printf
 import qualified Witch
 
-middleware :: Vault.Key RequestId.RequestId -> Wai.Middleware
-middleware = middlewareWith Clock.getMonotonicTime putStrLn
+middleware :: Context.Context -> Wai.Middleware
+middleware context = middlewareWith Clock.getMonotonicTime (Log.info context) (Context.requestIdKey context)
 
 middlewareWith ::
   (Monad m) =>
