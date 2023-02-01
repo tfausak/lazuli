@@ -12,7 +12,8 @@ import qualified Patrol
 import qualified Witch
 
 data Config = Config
-  { commit :: Maybe Text.Text,
+  { baseUrl :: Text.Text,
+    commit :: Maybe Text.Text,
     dataDirectory :: FilePath,
     environment :: Environment.Environment,
     help :: Bool,
@@ -26,7 +27,8 @@ data Config = Config
 development :: Config
 development =
   Config
-    { commit = Nothing,
+    { baseUrl = "/",
+      commit = Nothing,
       dataDirectory = "data",
       environment = Environment.Development,
       help = False,
@@ -41,6 +43,12 @@ testing = development {environment = Environment.Testing}
 
 applyFlag :: (Catch.MonadThrow m) => Config -> Flag.Flag -> m Config
 applyFlag config flag = case flag of
+  Flag.BaseUrl s -> do
+    let t = Witch.into @Text.Text s
+    pure $
+      if Text.isSuffixOf "/" t
+        then config {baseUrl = t}
+        else config {baseUrl = Text.snoc t '/'}
   Flag.Commit s -> pure config {commit = Just $ Witch.from s}
   Flag.DataDirectory s -> pure config {dataDirectory = s}
   Flag.Environment s -> case Witch.tryFrom s of

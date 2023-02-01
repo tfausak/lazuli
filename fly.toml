@@ -1,4 +1,5 @@
 [env]
+  LAZULI_BASE_URL = "https://tfausak-lazuli.fly.dev/"
   LAZULI_ENVIRONMENT = "production"
   LAZULI_HOST = "*"
 

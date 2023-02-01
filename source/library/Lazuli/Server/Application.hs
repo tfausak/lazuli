@@ -28,12 +28,13 @@ application context request respond =
             Lucid.meta_ [Lucid.charset_ "utf-8"]
             Lucid.meta_ [Lucid.name_ "viewport", Lucid.content_ "initial-scale=1, width=device-width"]
             Lucid.title_ "Lazuli"
-            Lucid.link_ [Lucid.rel_ "stylesheet", Lucid.href_ "/static/bootstrap.css"]
+            Lucid.link_ [Lucid.rel_ "stylesheet", Lucid.href_ $ Config.baseUrl (Context.config context) <> "static/bootstrap.css"]
+            Lucid.link_ [Lucid.rel_ "canonical", Lucid.href_ . Config.baseUrl $ Context.config context]
           Lucid.body_ $ do
             Lucid.header_ $ do
               Lucid.nav_ [Lucid.class_ "bg-body-secondary navbar"] $ do
                 Lucid.div_ [Lucid.class_ "container"] $ do
-                  Lucid.a_ [Lucid.class_ "navbar-brand", Lucid.href_ "/"] "Lazuli"
+                  Lucid.a_ [Lucid.class_ "navbar-brand", Lucid.href_ . Config.baseUrl $ Context.config context] "Lazuli"
             Lucid.main_ [Lucid.class_ "my-3"] $ do
               Lucid.div_ [Lucid.class_ "container"] $ do
                 Lucid.p_ $ do

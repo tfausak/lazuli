@@ -22,6 +22,12 @@ spec = Hspec.describe "Lazuli.Type.Config" $ do
     Hspec.it "handles the version flag" $ do
       Config.applyFlag config (Flag.Version True) `Hspec.shouldReturn` config {Config.version = True}
 
+    Hspec.it "handles the base URL flag" $ do
+      Config.applyFlag config (Flag.BaseUrl "http://test/") `Hspec.shouldReturn` config {Config.baseUrl = "http://test/"}
+
+    Hspec.it "ensures a trailing slash on the base URL" $ do
+      Config.applyFlag config (Flag.BaseUrl "http://test") `Hspec.shouldReturn` config {Config.baseUrl = "http://test/"}
+
     Hspec.it "handles the commit flag" $ do
       Config.applyFlag config (Flag.Commit "01ef") `Hspec.shouldReturn` config {Config.commit = Just "01ef"}
 

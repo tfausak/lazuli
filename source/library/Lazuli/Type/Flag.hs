@@ -3,7 +3,8 @@ module Lazuli.Type.Flag where
 import qualified System.Console.GetOpt as GetOpt
 
 data Flag
-  = Commit String
+  = BaseUrl String
+  | Commit String
   | DataDirectory FilePath
   | Environment String
   | Help Bool
@@ -35,6 +36,12 @@ optDescrs =
       ["no-version"]
       (GetOpt.NoArg $ Version False)
       "Prevents the version number from being printed.",
+    GetOpt.Option
+      []
+      ["base-url"]
+      (GetOpt.ReqArg BaseUrl "URL")
+      "Sets the base URL for generating links. Defaults to '/'. Can be either \
+      \a path or URL. A trailing slash will be added if missing.",
     GetOpt.Option
       []
       ["commit"]
