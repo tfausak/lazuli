@@ -19,7 +19,7 @@ spec = Hspec.describe "Lazuli.Action.Exception.Handle" $ do
     Hspec.it "logs the exception" $ do
       ref <- IORef.newIORef ""
       context <- Context.Load.run Config.testing
-      Exception.Handle.runWith (IORef.writeIORef ref) (error "unused") (error "unused") (error "unused") context TestError.TestError
+      Exception.Handle.runWith (IORef.writeIORef ref) (error "unused") (error "unused") (error "unused") context Nothing TestError.TestError
       IORef.readIORef ref `Hspec.shouldReturn` "TestError"
 
     Hspec.it "sends the exception to Sentry" $ do
@@ -33,5 +33,6 @@ spec = Hspec.describe "Lazuli.Action.Exception.Handle" $ do
         (pure [])
         (\_ _ _ -> IORef.atomicModifyIORef ref $ const (True, response))
         context
+        Nothing
         TestError.TestError
       IORef.readIORef ref `Hspec.shouldReturn` True

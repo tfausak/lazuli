@@ -50,7 +50,7 @@ executable = do
   context <- Context.Load.run config
 
   handler <- Conc.getUncaughtExceptionHandler
-  Conc.setUncaughtExceptionHandler $ Catch.handle handler . Exception.Handle.run context
+  Conc.setUncaughtExceptionHandler $ Catch.handle handler . Exception.Handle.run context Nothing
 
   Warp.runSettings (settings context)
     . Middleware.middleware context
@@ -64,7 +64,7 @@ settings context =
         & Warp.setBeforeMainLoop (Log.info context $ "Listening on " <> show host <> " " <> show port <> " ...")
         & Warp.setGracefulShutdownTimeout (Just 30)
         & Warp.setHost host
-        & Warp.setOnException (const $ Exception.Handle.run context)
+        & Warp.setOnException (Exception.Handle.run context)
         & Warp.setOnExceptionResponse (const $ Application.statusResponse Http.internalServerError500 [])
         & Warp.setPort (Witch.into @Warp.Port port)
         & Warp.setServerName ByteString.empty

@@ -27,5 +27,5 @@ middlewareWith ::
   Wai.MiddlewareWith m
 middlewareWith myPutStrLn newEvent getEnvironment store context handle request respond =
   Catch.catchAll (handle request respond) $ \exception -> do
-    Exception.Handle.runWith myPutStrLn newEvent getEnvironment store context exception
+    Exception.Handle.runWith myPutStrLn newEvent getEnvironment store context (Just request) exception
     respond $ Application.statusResponse Http.internalServerError500 []

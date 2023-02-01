@@ -47,6 +47,7 @@ library
   build-depends:
     , aeson ^>=2.1.1
     , bytestring ^>=0.11.4
+    , case-insensitive ^>=1.2.1
     , containers ^>=0.6.6
     , exceptions ^>=0.10.7
     , filepath ^>=1.4.2
