@@ -1,6 +1,20 @@
 {
   "updates": [
     {
+      "directory": "/docker/devcontainer",
+      "package-ecosystem": "docker",
+      "schedule": {
+        "interval": "daily"
+      }
+    },
+    {
+      "directory": "/docker/fly",
+      "package-ecosystem": "docker",
+      "schedule": {
+        "interval": "daily"
+      }
+    },
+    {
       "directory": "/",
       "package-ecosystem": "github-actions",
       "schedule": {

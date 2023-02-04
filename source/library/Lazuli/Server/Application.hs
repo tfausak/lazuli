@@ -52,7 +52,7 @@ application context request respond =
                       " commit "
                       Lucid.a_ [Lucid.href_ $ "https://github.com/tfausak/lazuli/commit/" <> commit] $ do
                         Lucid.toHtml $ Text.take 7 commit
-                  "."
+                  ". \x1f48e"
     ("GET", ["api", "health-check"]) -> respond $ statusResponse Http.ok200 [(Http.hCacheControl, "no-cache")]
     ("POST", ["api", "throw"]) -> Catch.throwM TestError.TestError
     ("GET", ["favicon.ico"]) ->

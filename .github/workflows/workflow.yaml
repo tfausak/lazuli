@@ -163,10 +163,10 @@
           "working-directory": "./artifact/ubuntu"
         },
         {
-          "run": "mv artifact/ubuntu/lazuli-*/data artifact/ubuntu/lazuli docker"
+          "run": "mv artifact/ubuntu/lazuli-*/data artifact/ubuntu/lazuli docker/fly"
         },
         {
-          "run": "chmod +x docker/lazuli"
+          "run": "chmod +x docker/fly/lazuli"
         },
         {
           "id": "meta",
@@ -189,7 +189,7 @@
           "uses": "docker/build-push-action@v4",
           "with": {
             "build-args": "LAZULI_COMMIT=${{ github.sha }}",
-            "context": "docker",
+            "context": "docker/fly",
             "push": "${{ github.event_name != 'schedule' }}",
             "tags": "${{ steps.meta.outputs.tags }}"
           }
