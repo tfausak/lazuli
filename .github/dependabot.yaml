@@ -8,13 +8,6 @@
       }
     },
     {
-      "directory": "/docker/fly",
-      "package-ecosystem": "docker",
-      "schedule": {
-        "interval": "daily"
-      }
-    },
-    {
       "directory": "/",
       "package-ecosystem": "github-actions",
       "schedule": {
